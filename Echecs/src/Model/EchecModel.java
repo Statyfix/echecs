@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
-
-import java.awt.event.MouseAdapter;
+package Model;
 
 /**
  *
  * @author vmachu
  */
-public class Controller extends MouseAdapter {
+public class EchecModel {
     
 }
