@@ -7,9 +7,11 @@ package Class;
 
 /**
  *
- * @author vmachu
+ * @author UTILISATEUR
  */
-public enum Couleur {
-    noir,
-    blanc;
+public class Reine extends Piece{
+
+    public Reine(String couleur) {
+        super("Reine", couleur);
+    }
 }
