@@ -15,14 +15,14 @@ import java.awt.event.MouseEvent;
  */
 public class EchecCaseController extends MouseAdapter {
 
-    int i;
-    int j;
+    private int rangee;
+    private int colonne;
 
     private EchecModel echec;
 
     public EchecCaseController(int _i, int _j, EchecModel _echec) {
-        i = _i;
-        j = _j;
+        this.rangee = _i;
+        this.colonne = _j;
         this.echec = _echec;
     }
 
