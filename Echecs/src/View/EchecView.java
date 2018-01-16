@@ -8,14 +8,16 @@ package View;
 import Controller.EchecCaseController;
 import Model.EchecModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author vmachu
  */
-public class EchecView extends javax.swing.JFrame implements Observateur{
-    
+public class EchecView extends javax.swing.JFrame implements Observateur {
+
     //Chargement des images
     private static final ImageIcon CASE_BLANC = new ImageIcon("./src/imgs/case_blanche.png");
     private static final ImageIcon CASE_NOIR = new ImageIcon("./src/imgs/case_noire.png");
@@ -31,51 +33,72 @@ public class EchecView extends javax.swing.JFrame implements Observateur{
     private static final ImageIcon RB_N = new ImageIcon("./src/imgs/blanches/RB_N.png");
     private static final ImageIcon TB_B = new ImageIcon("./src/imgs/blanches/TB_B.png");
     private static final ImageIcon TB_N = new ImageIcon("./src/imgs/blanches/TB_N.png");
-    
+
     //Nb de lignes et colonnes de l'échiquier
     private static final int taille = 8;
-    
+
+    JButton btnQuitter = new JButton("Q");
     //L'échiquier
-    private JLabel[][] echiquier; // Le plateau
-    
-    private EchecModel echec; // Le jeu
+    JLabel[][] jlEchiquier; // Le plateau
+
+    private EchecModel m_echec; // Le jeu
 
     /**
      * Creates new form EchecsFrame
      */
     public EchecView(EchecModel _echec) {
         initComponents();
-        
-        //On rempli notre morpion
-        this.echec = _echec;
-        
-        //Initialisation échiquier
-        this.echiquier = new JLabel[taille][taille];
-        
+
+        jPanelEchiquier.add(btnQuitter);
+        this.m_echec = _echec;
+
+        this.jlEchiquier = new JLabel[taille][taille];
+
         //Pour chaque case du tableau
-        for(int i=0;i<taille;i++){
-            for(int j=0;j<taille;j++){
-//                System.out.println("["+i+"]"+"["+j+"]");
-                this.echiquier[i][j] = new JLabel(CASE_BLANC);
-                //Ajout de la case à l'échiquier
-                this.jPanelEchiquier.add(this.echiquier[i][j]);
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j < taille; j++) {
                 
+//                System.out.println("["+i+"]"+"["+j+"]");
+                jlEchiquier[i][j] = new JLabel(CASE_BLANC);
+                //Ajout de la case à l'échiquier
+                jPanelEchiquier.add(jlEchiquier[i][j]);
+
                 //Ajout d'un mouse listener
-                this.echiquier[i][j].addMouseListener(
-                        new EchecCaseController(i,j, this.echec));
+                jlEchiquier[i][j].addMouseListener(
+                        new EchecCaseController(i, j, m_echec));
             }
         }
         // La fenêtre va se redimensionner par rapport à tous ses composants
         this.pack();
     }
-    
-    void initEchiquier(){
-        for(int i=0;i<taille;i++){
-            for(int j=0;j<taille;j++){
+
+    void initiatlisationEchiquier() {
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j < taille; j++) {
                 // init case
-                this.echiquier[i][j].setIcon(CASE_BLANC);
+                jlEchiquier[i][j].setIcon(CASE_BLANC);
             }
         }
+    }
+
+    public void majGraphique(int i, int j) {
+        System.out.println("coucou");
+    }
+
+    @Override
+    public void avertir(int i, int j) {
+        majGraphique(i, j);
+    }
+
+    @Override
+    public void avertirNouvellePartie() {
+        initiatlisationEchiquier();
+    }
+
+    @Override
+    public void avertirFinPartie() {
+        JOptionPane.showMessageDialog(null, "Echec et Mat !",
+                "Fin de la partie", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -89,8 +112,8 @@ public class EchecView extends javax.swing.JFrame implements Observateur{
 
         jPanelEchiquier = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        nouvellePartie = new javax.swing.JMenu();
+        quitter = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,23 +121,28 @@ public class EchecView extends javax.swing.JFrame implements Observateur{
         jPanelEchiquier.setLayout(jPanelEchiquierLayout);
         jPanelEchiquierLayout.setHorizontalGroup(
             jPanelEchiquierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 139, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
         jPanelEchiquierLayout.setVerticalGroup(
             jPanelEchiquierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Nouvelle partie");
-        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+        nouvellePartie.setText("Nouvelle partie");
+        nouvellePartie.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu1MouseClicked(evt);
+                nouvellePartieMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(nouvellePartie);
 
-        jMenu2.setText("Quitter");
-        jMenuBar1.add(jMenu2);
+        quitter.setText("Quitter");
+        quitter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quitterMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(quitter);
 
         setJMenuBar(jMenuBar1);
 
@@ -122,20 +150,29 @@ public class EchecView extends javax.swing.JFrame implements Observateur{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelEchiquier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jPanelEchiquier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelEchiquier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanelEchiquier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-        this.echec.nouvellePartie();
-        initEchiquier();
-    }//GEN-LAST:event_jMenu1MouseClicked
+    private void nouvellePartieMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nouvellePartieMouseClicked
+        m_echec.nouvellePartie();
+    }//GEN-LAST:event_nouvellePartieMouseClicked
+
+    private void quitterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitterMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_quitterMouseClicked
 
     /**
      * @param args the command line arguments
@@ -169,37 +206,24 @@ public class EchecView extends javax.swing.JFrame implements Observateur{
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-             public void run() {
-                // On instancie notre modèle
-                EchecModel echec = new EchecModel();
+            public void run() {
                 
-                // On instancie notre frame
-                EchecView view = new EchecView(echec);
+                EchecModel model = new EchecModel();
+                EchecView view = new EchecView(model);
                 
+                //ajout de la vue au modele comme observateur
+                model.ajouterObservateur(view);
+
                 view.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanelEchiquier;
+    private javax.swing.JMenu nouvellePartie;
+    private javax.swing.JMenu quitter;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void avertir(int i, int j) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void avertirNouvellePartie() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void avertirFinPartie(boolean avecGagnant) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
