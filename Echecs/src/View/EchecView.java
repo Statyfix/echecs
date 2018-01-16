@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  *
  * @author vmachu
  */
-public class EchecView extends javax.swing.JFrame {
+public class EchecView extends javax.swing.JFrame implements Observateur{
     
     //Chargement des images
     private static final ImageIcon CASE_BLANC = new ImageIcon("./src/imgs/case_blanche.png");
@@ -55,9 +55,8 @@ public class EchecView extends javax.swing.JFrame {
         //Pour chaque case du tableau
         for(int i=0;i<taille;i++){
             for(int j=0;j<taille;j++){
-                
+//                System.out.println("["+i+"]"+"["+j+"]");
                 this.echiquier[i][j] = new JLabel(CASE_BLANC);
-                System.out.println(i+' '+j);
                 //Ajout de la case à l'échiquier
                 this.jPanelEchiquier.add(this.echiquier[i][j]);
                 
@@ -66,11 +65,17 @@ public class EchecView extends javax.swing.JFrame {
                         new EchecCaseController(i,j, this.echec));
             }
         }
-        
+        // La fenêtre va se redimensionner par rapport à tous ses composants
+        this.pack();
     }
-
-    private EchecView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    void initEchiquier(){
+        for(int i=0;i<taille;i++){
+            for(int j=0;j<taille;j++){
+                // init case
+                this.echiquier[i][j].setIcon(CASE_BLANC);
+            }
+        }
     }
 
     /**
@@ -101,6 +106,11 @@ public class EchecView extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Nouvelle partie");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Quitter");
@@ -121,6 +131,11 @@ public class EchecView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        this.echec.nouvellePartie();
+        initEchiquier();
+    }//GEN-LAST:event_jMenu1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -172,4 +187,19 @@ public class EchecView extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanelEchiquier;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void avertir(int i, int j) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void avertirNouvellePartie() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void avertirFinPartie(boolean avecGagnant) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -10,5 +10,9 @@ package Model;
  * @author vmachu
  */
 public class EchecModel {
+
+    public void nouvellePartie() {
+        
+    }
     
 }
