@@ -162,6 +162,7 @@ public class EchecView extends JFrame implements Observateur {
                         int typePiece = echiquier[rangee][colonne].getPiece().getType();
                         jlEchiquier[rangee][colonne].setIcon(imgPieces[0][couleurPiece][typePiece]);
                     } else {
+                        System.out.println("caseblanche");
                         jlEchiquier[rangee][colonne].setIcon(CASE_BLANC);
                     }
                 } else {

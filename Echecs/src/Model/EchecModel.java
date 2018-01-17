@@ -42,10 +42,6 @@ public class EchecModel {
         return echiquier;
     }
 
-    public void jouer(int rangee, int colonne) {
-
-    }
-
     public void ajouterObservateur(Observateur observateur) {
         this.observateurs.add(observateur);
     }
@@ -85,6 +81,7 @@ public class EchecModel {
         for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
             for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
                 echiquier[rangee][colonne].setEtat(0);
+                echiquier[rangee][colonne].setPiece(null);
                 if (rangee == 1 || rangee == 6) {
                     if (rangee == 6) {
                         couleur = 0;
@@ -113,15 +110,22 @@ public class EchecModel {
         return echiquier[rangee][colonne];
     }
 
-    public boolean aucunePieceEnDeplacement() {
+    public Case rechercherPieceEnDeplacement() {
         for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
             for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
                 if (echiquier[rangee][colonne].estEnDeplacement()) {
-                    return false;
+                    return echiquier[rangee][colonne];
                 }
             }
         }
-        return true;
+        return null;
+    }
+
+    public void jouer(Case caseReferente, Case caseEnDeplacement) {
+        caseReferente.setPiece(caseEnDeplacement.getPiece());
+        caseEnDeplacement.setEtat(0);
+        caseEnDeplacement.setPiece(null);
+        avertirObservateurs(caseReferente);
     }
 
 }

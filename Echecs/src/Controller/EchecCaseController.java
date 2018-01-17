@@ -28,17 +28,18 @@ public class EchecCaseController extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        Case caseEnDeplacement = echec.rechercherPieceEnDeplacement();
         if (caseReferente.estOccupe()
                 && !caseReferente.estEnDeplacement()
-                && echec.aucunePieceEnDeplacement()) {
+                && caseEnDeplacement == null) {
             caseReferente.setEtat(1);
             echec.avertirEnDeplacementObservateurs(caseReferente);
         } else if (caseReferente.estEnDeplacement()) {
             caseReferente.setEtat(0);
             echec.avertirObservateurs(caseReferente);
         } else if (!caseReferente.estEnDeplacement()
-                && !echec.aucunePieceEnDeplacement()) {
-            echec.avertirObservateurs(caseReferente);
+                && caseEnDeplacement != null) {
+            echec.jouer(caseReferente, caseEnDeplacement);
         }
 
     }
