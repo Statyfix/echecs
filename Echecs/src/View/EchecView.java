@@ -8,6 +8,7 @@ package View;
 import Class.Case;
 import Controller.EchecCaseController;
 import Model.EchecModel;
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -49,7 +50,7 @@ public class EchecView extends JFrame implements Observateur {
     public EchecView(EchecModel _echec) {
 
         this.imgPieces = new ImageIcon[3][2][9];
-        
+
         imgPieces[0][0][0] = new ImageIcon("./src/imgs/blanches/PB_B.png");
         imgPieces[1][0][0] = new ImageIcon("./src/imgs/blanches/PB_N.png");
         imgPieces[0][0][1] = new ImageIcon("./src/imgs/blanches/TB_B.png");
@@ -74,18 +75,18 @@ public class EchecView extends JFrame implements Observateur {
         imgPieces[1][1][4] = new ImageIcon("./src/imgs/noires/DN_N.png");
         imgPieces[0][1][5] = new ImageIcon("./src/imgs/noires/RN_B.png");
         imgPieces[1][1][5] = new ImageIcon("./src/imgs/noires/RN_N.png");
-        imgPieces[3][0][0] = new ImageIcon("./src/imgs/blanches transparentes/PB.png");
-        imgPieces[3][0][1] = new ImageIcon("./src/imgs/blanches transparentes/TB.png");
-        imgPieces[3][0][2] = new ImageIcon("./src/imgs/blanches transparentes/CB.png");
-        imgPieces[3][0][3] = new ImageIcon("./src/imgs/blanches transparentes/FB.png");
-        imgPieces[3][0][4] = new ImageIcon("./src/imgs/blanches transparentes/DB.png");
-        imgPieces[3][0][5] = new ImageIcon("./src/imgs/blanches transparentes/RB.png");
-        imgPieces[3][1][0] = new ImageIcon("./src/imgs/noires transparentes/PN.png");
-        imgPieces[3][1][1] = new ImageIcon("./src/imgs/noires transparentes/TN.png");
-        imgPieces[3][1][2] = new ImageIcon("./src/imgs/noires transparentes/CN.png");
-        imgPieces[3][1][3] = new ImageIcon("./src/imgs/noires transparentes/FN.png");
-        imgPieces[3][1][4] = new ImageIcon("./src/imgs/noires transparentes/DN.png");
-        imgPieces[3][1][5] = new ImageIcon("./src/imgs/noires transparentes/RB.png");
+        imgPieces[2][0][0] = new ImageIcon("./src/imgs/blanches transparentes/PB.png");
+        imgPieces[2][0][1] = new ImageIcon("./src/imgs/blanches transparentes/TB.png");
+        imgPieces[2][0][2] = new ImageIcon("./src/imgs/blanches transparentes/CB.png");
+        imgPieces[2][0][3] = new ImageIcon("./src/imgs/blanches transparentes/FB.png");
+        imgPieces[2][0][4] = new ImageIcon("./src/imgs/blanches transparentes/DB.png");
+        imgPieces[2][0][5] = new ImageIcon("./src/imgs/blanches transparentes/RB.png");
+        imgPieces[2][1][0] = new ImageIcon("./src/imgs/noires transparentes/PN.png");
+        imgPieces[2][1][1] = new ImageIcon("./src/imgs/noires transparentes/TN.png");
+        imgPieces[2][1][2] = new ImageIcon("./src/imgs/noires transparentes/CN.png");
+        imgPieces[2][1][3] = new ImageIcon("./src/imgs/noires transparentes/FN.png");
+        imgPieces[2][1][4] = new ImageIcon("./src/imgs/noires transparentes/DN.png");
+        imgPieces[2][1][5] = new ImageIcon("./src/imgs/noires transparentes/RN.png");
 
         this.setTitle("Jeu d'échec");
         this.setResizable(false);
@@ -181,14 +182,18 @@ public class EchecView extends JFrame implements Observateur {
     }
 
     @Override
-    public void avertirEnDeplacement(Case caseEnDeplacement) {
+    public void avertirEnDeplacement(Case caseReferente) {
         //on change le curseur de la souris en fonction de la piece en déplacement
-        this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(imgPieces[3][0][0]).getImage(), new Point(0, 0), "custom cursor")
-        );
+        this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                imgPieces[2][caseReferente.getPiece().getCouleur()][caseReferente.getPiece().getType()].getImage(),
+                new Point(0, 0),
+                "custom cursor"
+        ));
 
-        int rangee = caseEnDeplacement.getRangee();
-        int colonne = caseEnDeplacement.getColonne();
-        if ((rangee + colonne) % 2 == 0) { //changement de la couleur une fois sur deux
+        //on affiche une case vide à la place de la case avec la pièce
+        int rangee = caseReferente.getRangee();
+        int colonne = caseReferente.getColonne();
+        if ((rangee + colonne) % 2 == 0) {
             jlEchiquier[rangee][colonne].setIcon(CASE_BLANC);
         } else {
             jlEchiquier[rangee][colonne].setIcon(CASE_NOIR);
@@ -204,6 +209,25 @@ public class EchecView extends JFrame implements Observateur {
     public void avertirFinPartie() {
         JOptionPane.showMessageDialog(null, "Echec et Mat !",
                 "Fin de la partie", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void avertir(Case caseReferente) {
+        //on remet le curseur par défault
+        this.setCursor(Cursor.getDefaultCursor());
+
+        //on affiche la case avecla pièce
+        int rangee = caseReferente.getRangee();
+        int colonne = caseReferente.getColonne();
+        if ((rangee + colonne) % 2 == 0) {
+            jlEchiquier[rangee][colonne].setIcon(
+                    imgPieces[0][caseReferente.getPiece().getCouleur()][caseReferente.getPiece().getType()]
+            );
+        } else {
+            jlEchiquier[rangee][colonne].setIcon(
+                    imgPieces[1][caseReferente.getPiece().getCouleur()][caseReferente.getPiece().getType()]
+            );
+        }
     }
 
 }

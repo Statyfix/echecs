@@ -28,9 +28,14 @@ public class EchecCaseController extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (!caseReferente.estEnDeolacement() && echec.aucunePieceEnDeplacement()) {
+        if (caseReferente.estOccupe()
+                && !caseReferente.estEnDeplacement()
+                && echec.aucunePieceEnDeplacement()) {
             caseReferente.setEtat(1);
             echec.avertirEnDeplacementObservateurs(caseReferente);
+        } else if (caseReferente.estEnDeplacement()) {
+            caseReferente.setEtat(0);
+            echec.avertirObservateurs(caseReferente);
         }
 
     }

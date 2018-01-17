@@ -13,4 +13,6 @@ public interface Observateur {
     public void avertirFinPartie();
 
     public void avertirEnDeplacement(Case caseEnDeplacement);
+
+    public void avertir(Case caseReferente);
 }

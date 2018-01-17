@@ -54,9 +54,15 @@ public class EchecModel {
         this.observateurs.remove(observateur);
     }
 
-    public void avertirEnDeplacementObservateurs(Case caseEnDeplacement) {
+    public void avertirObservateurs(Case caseReferente) {
         for (Observateur o : this.observateurs) {
-            o.avertirEnDeplacement(caseEnDeplacement);
+            o.avertir(caseReferente);
+        }
+    }
+
+    public void avertirEnDeplacementObservateurs(Case caseReferente) {
+        for (Observateur o : this.observateurs) {
+            o.avertirEnDeplacement(caseReferente);
         }
     }
 
@@ -110,11 +116,12 @@ public class EchecModel {
     public boolean aucunePieceEnDeplacement() {
         for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
             for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
-                if (echiquier[rangee][colonne].estEnDeolacement()) {
+                if (echiquier[rangee][colonne].estEnDeplacement()) {
                     return false;
                 }
             }
         }
         return true;
     }
+
 }

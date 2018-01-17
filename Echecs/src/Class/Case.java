@@ -59,7 +59,7 @@ public class Case {
         }
     }
 
-    public boolean estEnDeolacement() {
+    public boolean estEnDeplacement() {
         return etat == 1;
     }
 }
