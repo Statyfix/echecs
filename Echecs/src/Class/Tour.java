@@ -9,9 +9,9 @@ package Class;
  *
  * @author UTILISATEUR
  */
-public class Tour extends Piece{
+public class Tour extends Piece {
 
-    public Tour(String couleur) {
-        super("Tour", couleur);
+    public Tour(int couleur) {
+        super("Tour", couleur, 1);
     }
 }

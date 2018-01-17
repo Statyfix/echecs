@@ -11,7 +11,7 @@ package Class;
  */
 public class Fou extends Piece{
 
-    public Fou(String couleur) {
-        super("Fou", couleur);
+    public Fou(int couleur) {
+        super("Fou", couleur, 3);
     }
 }

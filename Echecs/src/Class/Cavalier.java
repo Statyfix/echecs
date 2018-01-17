@@ -9,9 +9,9 @@ package Class;
  *
  * @author UTILISATEUR
  */
-public class Cavalier extends Piece{
+public class Cavalier extends Piece {
 
-    public Cavalier(String couleur) {
-        super("Cavalier", couleur);
+    public Cavalier(int couleur) {
+        super("Cavalier", couleur, 2);
     }
 }

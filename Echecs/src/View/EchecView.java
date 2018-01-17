@@ -5,11 +5,13 @@
  */
 package View;
 
+import Class.Case;
 import Controller.EchecCaseController;
 import Model.EchecModel;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -26,34 +28,71 @@ public class EchecView extends JFrame implements Observateur {
     //Chargement des images
     private static final ImageIcon CASE_BLANC = new ImageIcon("./src/imgs/case_blanche.png");
     private static final ImageIcon CASE_NOIR = new ImageIcon("./src/imgs/case_noire.png");
-    private static final ImageIcon CB_B = new ImageIcon("./src/imgs/blanches/CB_B.png");
-    private static final ImageIcon CB_N = new ImageIcon("./src/imgs/blanches/CB_N.png");
-    private static final ImageIcon DB_B = new ImageIcon("./src/imgs/blanches/DB_B.png");
-    private static final ImageIcon DB_N = new ImageIcon("./src/imgs/blanches/DB_N.png");
-    private static final ImageIcon FB_B = new ImageIcon("./src/imgs/blanches/FB_B.png");
-    private static final ImageIcon FB_N = new ImageIcon("./src/imgs/blanches/FB_N.png");
-    private static final ImageIcon PB_B = new ImageIcon("./src/imgs/blanches/PB_B.png");
-    private static final ImageIcon PB_N = new ImageIcon("./src/imgs/blanches/PB_N.png");
-    private static final ImageIcon RB_B = new ImageIcon("./src/imgs/blanches/RB_B.png");
-    private static final ImageIcon RB_N = new ImageIcon("./src/imgs/blanches/RB_N.png");
-    private static final ImageIcon TB_B = new ImageIcon("./src/imgs/blanches/TB_B.png");
-    private static final ImageIcon TB_N = new ImageIcon("./src/imgs/blanches/TB_N.png");
+
+    //[couleur case][couleur pièce][type pièce]
+    private static ImageIcon imgPieces[][][];
 
     //Nb de lignes et colonnes de l'échiquier
-    private static final int taille = 8;
+    private static final int TAILLE = 8;
+
+    //le menu
+    private JMenuBar jMenuBar1;
+    private JMenu nouvellePartie;
+    private JMenu quitter;
 
     //L'échiquier
+    private JPanel jPanelEchiquier;
     private JLabel[][] jlEchiquier; // Le plateau
 
     private EchecModel m_echec; // Le jeu
 
     public EchecView(EchecModel _echec) {
 
-        this.setTitle("Jeu d'échec");
+        this.imgPieces = new ImageIcon[3][2][9];
+        
+        imgPieces[0][0][0] = new ImageIcon("./src/imgs/blanches/PB_B.png");
+        imgPieces[1][0][0] = new ImageIcon("./src/imgs/blanches/PB_N.png");
+        imgPieces[0][0][1] = new ImageIcon("./src/imgs/blanches/TB_B.png");
+        imgPieces[1][0][1] = new ImageIcon("./src/imgs/blanches/TB_N.png");
+        imgPieces[0][0][2] = new ImageIcon("./src/imgs/blanches/CB_B.png");
+        imgPieces[1][0][2] = new ImageIcon("./src/imgs/blanches/CB_N.png");
+        imgPieces[0][0][3] = new ImageIcon("./src/imgs/blanches/FB_B.png");
+        imgPieces[1][0][3] = new ImageIcon("./src/imgs/blanches/FB_N.png");
+        imgPieces[0][0][4] = new ImageIcon("./src/imgs/blanches/DB_B.png");
+        imgPieces[1][0][4] = new ImageIcon("./src/imgs/blanches/DB_N.png");
+        imgPieces[0][0][5] = new ImageIcon("./src/imgs/blanches/RB_B.png");
+        imgPieces[1][0][5] = new ImageIcon("./src/imgs/blanches/RB_N.png");
+        imgPieces[0][1][0] = new ImageIcon("./src/imgs/noires/PN_B.png");
+        imgPieces[1][1][0] = new ImageIcon("./src/imgs/noires/PN_N.png");
+        imgPieces[0][1][1] = new ImageIcon("./src/imgs/noires/TN_B.png");
+        imgPieces[1][1][1] = new ImageIcon("./src/imgs/noires/TN_N.png");
+        imgPieces[0][1][2] = new ImageIcon("./src/imgs/noires/CN_B.png");
+        imgPieces[1][1][2] = new ImageIcon("./src/imgs/noires/CN_N.png");
+        imgPieces[0][1][3] = new ImageIcon("./src/imgs/noires/FN_B.png");
+        imgPieces[1][1][3] = new ImageIcon("./src/imgs/noires/FN_N.png");
+        imgPieces[0][1][4] = new ImageIcon("./src/imgs/noires/DN_B.png");
+        imgPieces[1][1][4] = new ImageIcon("./src/imgs/noires/DN_N.png");
+        imgPieces[0][1][5] = new ImageIcon("./src/imgs/noires/RN_B.png");
+        imgPieces[1][1][5] = new ImageIcon("./src/imgs/noires/RN_N.png");
+        imgPieces[3][0][0] = new ImageIcon("./src/imgs/blanches transparentes/PB.png");
+        imgPieces[3][0][1] = new ImageIcon("./src/imgs/blanches transparentes/TB.png");
+        imgPieces[3][0][2] = new ImageIcon("./src/imgs/blanches transparentes/CB.png");
+        imgPieces[3][0][3] = new ImageIcon("./src/imgs/blanches transparentes/FB.png");
+        imgPieces[3][0][4] = new ImageIcon("./src/imgs/blanches transparentes/DB.png");
+        imgPieces[3][0][5] = new ImageIcon("./src/imgs/blanches transparentes/RB.png");
+        imgPieces[3][1][0] = new ImageIcon("./src/imgs/noires transparentes/PN.png");
+        imgPieces[3][1][1] = new ImageIcon("./src/imgs/noires transparentes/TN.png");
+        imgPieces[3][1][2] = new ImageIcon("./src/imgs/noires transparentes/CN.png");
+        imgPieces[3][1][3] = new ImageIcon("./src/imgs/noires transparentes/FN.png");
+        imgPieces[3][1][4] = new ImageIcon("./src/imgs/noires transparentes/DN.png");
+        imgPieces[3][1][5] = new ImageIcon("./src/imgs/noires transparentes/RB.png");
 
-        JMenuBar jMenuBar1 = new javax.swing.JMenuBar();
-        JMenu nouvellePartie = new javax.swing.JMenu();
-        JMenu quitter = new javax.swing.JMenu();
+        this.setTitle("Jeu d'échec");
+        this.setResizable(false);
+
+        this.jMenuBar1 = new javax.swing.JMenuBar();
+        this.nouvellePartie = new javax.swing.JMenu();
+        this.quitter = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,16 +114,16 @@ public class EchecView extends JFrame implements Observateur {
 
         this.setJMenuBar(jMenuBar1);
 
-        JPanel jPanelEchiquier = new JPanel();
-        jPanelEchiquier.setLayout(new GridLayout(taille, taille));//définit la taille de la grille de 8 sur 8
+        jPanelEchiquier = new JPanel();
+        jPanelEchiquier.setLayout(new GridLayout(TAILLE, TAILLE));//définit la taille de la grille de 8 sur 8
 
         this.m_echec = _echec;
 
-        this.jlEchiquier = new JLabel[taille][taille];
+        this.jlEchiquier = new JLabel[TAILLE][TAILLE];
 
 //        Pour chaque case du tableau
-        for (int i = 0; i < taille; i++) {
-            for (int j = 0; j < taille; j++) {
+        for (int i = 0; i < TAILLE; i++) {
+            for (int j = 0; j < TAILLE; j++) {
 
                 if ((i + j) % 2 == 0) {//on change la couleur une fois sur deux
                     jlEchiquier[i][j] = new JLabel(CASE_BLANC);
@@ -95,8 +134,8 @@ public class EchecView extends JFrame implements Observateur {
                 jPanelEchiquier.add(jlEchiquier[i][j]);
 
                 //Ajout d'un mouse listener
-                jlEchiquier[i][j].addMouseListener( 
-                       new EchecCaseController(i, j, m_echec));
+                jlEchiquier[i][j].addMouseListener(
+                        new EchecCaseController(m_echec.chercherCase(i, j), m_echec));
             }
         }
         this.add(jPanelEchiquier);
@@ -113,12 +152,25 @@ public class EchecView extends JFrame implements Observateur {
     }
 
     void initiatlisationEchiquier() {
-        for (int i = 0; i < taille; i++) {
-            for (int j = 0; j < taille; j++) {
-                if ((i + j) % 2 == 0) {//on change la couleur une fois sur deux
-                    jlEchiquier[i][j].setIcon(CASE_BLANC);
+        for (int rangee = 0; rangee < TAILLE; rangee++) {
+            for (int colonne = 0; colonne < TAILLE; colonne++) {
+                Case[][] echiquier = EchecModel.getEchiquier();//recuperation des pieces sur l'echiquier
+                if ((rangee + colonne) % 2 == 0) { //changement de la couleur une fois sur deux
+                    if (echiquier[rangee][colonne].estOccupe()) {
+                        int couleurPiece = echiquier[rangee][colonne].getPiece().getCouleur();
+                        int typePiece = echiquier[rangee][colonne].getPiece().getType();
+                        jlEchiquier[rangee][colonne].setIcon(imgPieces[0][couleurPiece][typePiece]);
+                    } else {
+                        jlEchiquier[rangee][colonne].setIcon(CASE_BLANC);
+                    }
                 } else {
-                    jlEchiquier[i][j].setIcon(CASE_NOIR);
+                    if (echiquier[rangee][colonne].estOccupe()) {
+                        int couleurPiece = echiquier[rangee][colonne].getPiece().getCouleur();
+                        int typePiece = echiquier[rangee][colonne].getPiece().getType();
+                        jlEchiquier[rangee][colonne].setIcon(imgPieces[1][couleurPiece][typePiece]);
+                    } else {
+                        jlEchiquier[rangee][colonne].setIcon(CASE_NOIR);
+                    }
                 }
             }
         }
@@ -129,8 +181,18 @@ public class EchecView extends JFrame implements Observateur {
     }
 
     @Override
-    public void avertir(int i, int j) {
-        majGraphique(i, j);
+    public void avertirEnDeplacement(Case caseEnDeplacement) {
+        //on change le curseur de la souris en fonction de la piece en déplacement
+        this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(imgPieces[3][0][0]).getImage(), new Point(0, 0), "custom cursor")
+        );
+
+        int rangee = caseEnDeplacement.getRangee();
+        int colonne = caseEnDeplacement.getColonne();
+        if ((rangee + colonne) % 2 == 0) { //changement de la couleur une fois sur deux
+            jlEchiquier[rangee][colonne].setIcon(CASE_BLANC);
+        } else {
+            jlEchiquier[rangee][colonne].setIcon(CASE_NOIR);
+        }
     }
 
     @Override

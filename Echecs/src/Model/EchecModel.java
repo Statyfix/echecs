@@ -5,6 +5,13 @@
  */
 package Model;
 
+import Class.Case;
+import Class.Cavalier;
+import Class.Fou;
+import Class.Pion;
+import Class.Reine;
+import Class.Roi;
+import Class.Tour;
 import View.Observateur;
 import java.util.ArrayList;
 
@@ -14,8 +21,8 @@ import java.util.ArrayList;
  */
 public class EchecModel {
 
-    private int[][] echiquier;
-    private static final int taille = 8;
+    private static Case[][] echiquier;
+    private static final int TAILLE = 8;
     private boolean finPartie;
     private ArrayList<Observateur> observateurs;
 
@@ -23,8 +30,16 @@ public class EchecModel {
         // Initialisation de la liste des observateurs
         this.observateurs = new ArrayList<Observateur>();// Initialisation de la liste des observateurs
 
-        // Initialisation
-        nouvellePartie();
+        this.echiquier = new Case[TAILLE][TAILLE];
+        for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
+            for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
+                echiquier[rangee][colonne] = new Case(rangee, colonne);
+            }
+        }
+    }
+
+    public static Case[][] getEchiquier() {
+        return echiquier;
     }
 
     public void jouer(int rangee, int colonne) {
@@ -39,9 +54,9 @@ public class EchecModel {
         this.observateurs.remove(observateur);
     }
 
-    public void avertirObservateurs(int i, int j) {
+    public void avertirEnDeplacementObservateurs(Case caseEnDeplacement) {
         for (Observateur o : this.observateurs) {
-            o.avertir(i, j);
+            o.avertirEnDeplacement(caseEnDeplacement);
         }
     }
 
@@ -56,18 +71,50 @@ public class EchecModel {
             o.avertirFinPartie();
         }
     }
-    
+
     public void nouvellePartie() {
-        this.echiquier = new int[taille][taille];
-        
-        for(int i = 0; i < taille; i++) {
-            for(int j = 0; j< taille; j++) {
-                echiquier[i][j] = 0;
+
+        int couleur = 1;
+
+        for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
+            for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
+                echiquier[rangee][colonne].setEtat(0);
+                if (rangee == 1 || rangee == 6) {
+                    if (rangee == 6) {
+                        couleur = 0;
+                    }
+                    echiquier[rangee][colonne].setPiece(new Pion(couleur));
+                }
+            }
+            if (rangee == 0 || rangee == 7) {
+                echiquier[rangee][0].setPiece(new Tour(couleur));
+                echiquier[rangee][1].setPiece(new Cavalier(couleur));
+                echiquier[rangee][2].setPiece(new Fou(couleur));
+                echiquier[rangee][3].setPiece(new Reine(couleur));
+                echiquier[rangee][4].setPiece(new Roi(couleur));
+                echiquier[rangee][5].setPiece(new Fou(couleur));
+                echiquier[rangee][6].setPiece(new Cavalier(couleur));
+                echiquier[rangee][7].setPiece(new Tour(couleur));
             }
         }
-        
+
         finPartie = false; // Ce n'est pas la fin de la partie
-        
+
         avertirNouvellePartieObservateurs();
+    }
+
+    public Case chercherCase(int rangee, int colonne) {
+        return echiquier[rangee][colonne];
+    }
+
+    public boolean aucunePieceEnDeplacement() {
+        for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
+            for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
+                if (echiquier[rangee][colonne].estEnDeolacement()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

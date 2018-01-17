@@ -1,11 +1,16 @@
 package View;
 
+import Class.Case;
+
 /**
  *
  * @author qdesbin
  */
 public interface Observateur {
-    void avertir(int i, int j);
-    void avertirNouvellePartie();
-    void avertirFinPartie();
+
+    public void avertirNouvellePartie();
+
+    public void avertirFinPartie();
+
+    public void avertirEnDeplacement(Case caseEnDeplacement);
 }

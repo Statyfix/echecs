@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Class.Case;
 import Class.Piece;
 import Model.EchecModel;
 import java.awt.event.MouseAdapter;
@@ -16,37 +17,21 @@ import java.awt.event.MouseEvent;
  */
 public class EchecCaseController extends MouseAdapter {
 
-    private int rangee;
-    private int colonne;
-    private Piece piece;
+    private Case caseReferente;
 
     private EchecModel echec;
 
-    public EchecCaseController(int _i, int _j, EchecModel _echec) {
-        this.rangee = _i;
-        this.colonne = _j;
+    public EchecCaseController(Case _caseReferente, EchecModel _echec) {
+        this.caseReferente = _caseReferente;
         this.echec = _echec;
-    }
-
-    public EchecCaseController(int _i, int _j, EchecModel _echec, Piece _piece) {
-        this(_i, _j, _echec);
-        this.piece = _piece;
-    }
-
-    public boolean estOccupe() {
-        return (piece != null);
-    }
-
-    public boolean estOccupePar(String couleur) {
-        if (piece == null) {
-            return false;
-        } else {
-            return (piece.getCouleur().equals(couleur));
-        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(rangee + " " + colonne);
+        if (!caseReferente.estEnDeolacement() && echec.aucunePieceEnDeplacement()) {
+            caseReferente.setEtat(1);
+            echec.avertirEnDeplacementObservateurs(caseReferente);
+        }
+
     }
 }

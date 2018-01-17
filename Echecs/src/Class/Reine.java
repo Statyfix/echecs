@@ -9,9 +9,9 @@ package Class;
  *
  * @author UTILISATEUR
  */
-public class Reine extends Piece{
+public class Reine extends Piece {
 
-    public Reine(String couleur) {
-        super("Reine", couleur);
+    public Reine(int couleur) {
+        super("Reine", couleur, 4);
     }
 }

@@ -12,20 +12,25 @@ package Class;
 public abstract class Piece {
 
     private String nom;
-    private String couleur;
+    private int couleur;
+    private int type;
 
-    public Piece(String _nom, String _couleur) {
+    public Piece(String _nom, int _couleur, int _type) {
         this.nom = _nom;
         this.couleur = _couleur;
+        this.type = _type;
     }
 
     public String getNom() {
         return nom;
     }
 
-    public String getCouleur() {
+    public int getCouleur() {
         return couleur;
     }
 
-    
+    public int getType() {
+        return type;
+    }
+
 }
