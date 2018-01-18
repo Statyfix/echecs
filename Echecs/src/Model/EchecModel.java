@@ -25,10 +25,12 @@ public class EchecModel {
     private static final int TAILLE = 8;
     private boolean finPartie;
     private ArrayList<Observateur> observateurs;
+    private int joueurEnJeu;
 
     public EchecModel() {
         // Initialisation de la liste des observateurs
         this.observateurs = new ArrayList<Observateur>();// Initialisation de la liste des observateurs
+        this.joueurEnJeu = 0;
 
         this.echiquier = new Case[TAILLE][TAILLE];
         for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
@@ -40,6 +42,10 @@ public class EchecModel {
 
     public static Case[][] getEchiquier() {
         return echiquier;
+    }
+
+    public int getJoueurEnJeu() {
+        return joueurEnJeu;
     }
 
     public void ajouterObservateur(Observateur observateur) {
@@ -86,18 +92,18 @@ public class EchecModel {
                     if (rangee == 6) {
                         couleur = 0;
                     }
-                    echiquier[rangee][colonne].setPiece(new Pion(couleur));
+                    echiquier[rangee][colonne].setPiece(new Pion(couleur, this));
                 }
             }
             if (rangee == 0 || rangee == 7) {
-                echiquier[rangee][0].setPiece(new Tour(couleur));
-                echiquier[rangee][1].setPiece(new Cavalier(couleur));
-                echiquier[rangee][2].setPiece(new Fou(couleur));
-                echiquier[rangee][3].setPiece(new Reine(couleur));
-                echiquier[rangee][4].setPiece(new Roi(couleur));
-                echiquier[rangee][5].setPiece(new Fou(couleur));
-                echiquier[rangee][6].setPiece(new Cavalier(couleur));
-                echiquier[rangee][7].setPiece(new Tour(couleur));
+                echiquier[rangee][0].setPiece(new Tour(couleur, this));
+                echiquier[rangee][1].setPiece(new Cavalier(couleur, this));
+                echiquier[rangee][2].setPiece(new Fou(couleur, this));
+                echiquier[rangee][3].setPiece(new Reine(couleur, this));
+                echiquier[rangee][4].setPiece(new Roi(couleur, this));
+                echiquier[rangee][5].setPiece(new Fou(couleur, this));
+                echiquier[rangee][6].setPiece(new Cavalier(couleur, this));
+                echiquier[rangee][7].setPiece(new Tour(couleur, this));
             }
         }
 
@@ -126,8 +132,16 @@ public class EchecModel {
             caseArrive.setPiece(caseDepart.getPiece());
             caseDepart.setEtat(0);
             caseDepart.setPiece(null);
+            if (caseArrive.getPiece().estEnPositionInitiale()) {
+                caseArrive.getPiece().setPositionInitiale(false);
+            }
+            joueurSuivant();
             avertirObservateurs(caseArrive);
         }
+    }
+
+    private void joueurSuivant() {
+        joueurEnJeu = joueurEnJeu == 0 ? 1 : 0;
     }
 
 }

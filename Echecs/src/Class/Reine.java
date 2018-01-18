@@ -5,14 +5,16 @@
  */
 package Class;
 
+import Model.EchecModel;
+
 /**
  *
  * @author UTILISATEUR
  */
 public class Reine extends Piece {
 
-    public Reine(int couleur) {
-        super("Reine", couleur, 4);
+    public Reine(int couleur, EchecModel _echec_m) {
+        super("Reine", couleur, 4, _echec_m);
     }
 
     @Override

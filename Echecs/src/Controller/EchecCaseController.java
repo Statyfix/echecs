@@ -19,27 +19,28 @@ public class EchecCaseController extends MouseAdapter {
 
     private Case caseReferente;
 
-    private EchecModel echec;
+    private EchecModel echec_m;
 
-    public EchecCaseController(Case _caseReferente, EchecModel _echec) {
+    public EchecCaseController(Case _caseReferente, EchecModel _echec_m) {
         this.caseReferente = _caseReferente;
-        this.echec = _echec;
+        this.echec_m = _echec_m;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Case caseEnDeplacement = echec.rechercherPieceEnDeplacement();
+        Case caseEnDeplacement = echec_m.rechercherPieceEnDeplacement();
         if (caseReferente.estOccupe()
+                && echec_m.getJoueurEnJeu() == caseReferente.getPiece().getCouleur()
                 && !caseReferente.estEnDeplacement()
-                && caseEnDeplacement == null) {
+                && caseEnDeplacement == null) { // et si aucune piece n'est en déplacement
             caseReferente.setEtat(1);
-            echec.avertirEnDeplacementObservateurs(caseReferente);
+            echec_m.avertirEnDeplacementObservateurs(caseReferente);
         } else if (caseReferente.estEnDeplacement()) {
             caseReferente.setEtat(0);
-            echec.avertirObservateurs(caseReferente);
+            echec_m.avertirObservateurs(caseReferente);
         } else if (!caseReferente.estEnDeplacement()
                 && caseEnDeplacement != null) {
-            echec.jouer(caseReferente, caseEnDeplacement);
+            echec_m.jouer(caseReferente, caseEnDeplacement);
         }
 
     }
