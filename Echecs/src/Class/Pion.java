@@ -20,13 +20,17 @@ public class Pion extends Piece {
 
     @Override
     public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
-        if (caseArrive.getRangee() == caseDepart.getRangee() + 1
+        if (super.getCouleur() == 1
+                && caseArrive.getRangee() == caseDepart.getRangee() + 1
+                && caseArrive.getColonne() == caseDepart.getColonne()) {
+            return true;
+        } else if (super.getCouleur() == 0
+                && caseArrive.getRangee() == caseDepart.getRangee() - 1
                 && caseArrive.getColonne() == caseDepart.getColonne()) {
             return true;
         } else {
             return false;
         }
     }
-
 
 }
