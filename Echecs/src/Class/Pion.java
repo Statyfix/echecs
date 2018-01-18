@@ -11,7 +11,22 @@ package Class;
  */
 public class Pion extends Piece {
 
+    private boolean positionInitiale;
+
     public Pion(int couleur) {
         super("Pion", couleur, 0);
+        this.positionInitiale = true;
     }
+
+    @Override
+    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+        if (caseArrive.getRangee() == caseDepart.getRangee() + 1
+                && caseArrive.getColonne() == caseDepart.getColonne()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

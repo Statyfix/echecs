@@ -21,6 +21,7 @@ public abstract class Piece {
         this.type = _type;
     }
 
+    //GET
     public String getNom() {
         return nom;
     }
@@ -32,5 +33,7 @@ public abstract class Piece {
     public int getType() {
         return type;
     }
+
+    public abstract boolean deplacementPossible(Case caseArrive, Case caseDepart);
 
 }

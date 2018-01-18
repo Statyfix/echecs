@@ -14,4 +14,9 @@ public class Tour extends Piece {
     public Tour(int couleur) {
         super("Tour", couleur, 1);
     }
+
+    @Override
+    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -121,11 +121,13 @@ public class EchecModel {
         return null;
     }
 
-    public void jouer(Case caseReferente, Case caseEnDeplacement) {
-        caseReferente.setPiece(caseEnDeplacement.getPiece());
-        caseEnDeplacement.setEtat(0);
-        caseEnDeplacement.setPiece(null);
-        avertirObservateurs(caseReferente);
+    public void jouer(Case caseArrive, Case caseDepart) {
+        if (caseDepart.getPiece().deplacementPossible(caseArrive, caseDepart)) {
+            caseArrive.setPiece(caseDepart.getPiece());
+            caseDepart.setEtat(0);
+            caseDepart.setPiece(null);
+            avertirObservateurs(caseArrive);
+        }
     }
 
 }

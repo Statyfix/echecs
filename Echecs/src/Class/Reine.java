@@ -14,4 +14,9 @@ public class Reine extends Piece {
     public Reine(int couleur) {
         super("Reine", couleur, 4);
     }
+
+    @Override
+    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

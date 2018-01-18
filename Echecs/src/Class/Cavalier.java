@@ -14,4 +14,9 @@ public class Cavalier extends Piece {
     public Cavalier(int couleur) {
         super("Cavalier", couleur, 2);
     }
+
+    @Override
+    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
