@@ -24,8 +24,8 @@ public class Fou extends Piece {
             int colonne = caseDepart.getColonne();
             if (rangee < caseArrive.getRangee() && colonne < caseArrive.getColonne()) {
                 while (colonne <= 8 && rangee <= 8) {
-                    colonne++;
                     rangee++;
+                    colonne++;
                     if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
                         return true;
                     } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
@@ -34,8 +34,28 @@ public class Fou extends Piece {
                 }
             } else if (rangee > caseArrive.getRangee() && colonne > caseArrive.getColonne()) {
                 while (colonne <= 8 && rangee <= 8) {
-                    colonne--;
                     rangee--;
+                    colonne--;
+                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                        return true;
+                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        return false;
+                    }
+                }
+            } else if (rangee > caseArrive.getRangee() && colonne < caseArrive.getColonne()) {
+                while (colonne <= 8 && rangee <= 8) {
+                    rangee--;
+                    colonne++;
+                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                        return true;
+                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        return false;
+                    }
+                }
+            } else if (rangee < caseArrive.getRangee() && colonne > caseArrive.getColonne()) {
+                while (colonne <= 8 && rangee <= 8) {
+                    rangee++;
+                    colonne--;
                     if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
                         return true;
                     } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
