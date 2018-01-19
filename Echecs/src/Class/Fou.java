@@ -19,6 +19,33 @@ public class Fou extends Piece {
 
     @Override
     public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
+            int rangee = caseDepart.getRangee();
+            int colonne = caseDepart.getColonne();
+            if (rangee < caseArrive.getRangee() && colonne < caseArrive.getColonne()) {
+                while (colonne <= 8 && rangee <= 8) {
+                    colonne++;
+                    rangee++;
+                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                        return true;
+                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        return false;
+                    }
+                }
+            } else if (rangee > caseArrive.getRangee() && colonne > caseArrive.getColonne()) {
+                while (colonne <= 8 && rangee <= 8) {
+                    colonne--;
+                    rangee--;
+                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                        return true;
+                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 }
