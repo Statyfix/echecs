@@ -19,6 +19,21 @@ public class Roi extends Piece {
 
     @Override
     public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
+            if (caseDepart.getRangee() - caseArrive.getRangee() == 1
+                    || caseArrive.getRangee() - caseDepart.getRangee() == 1) {
+                if (caseDepart.getColonne() == caseArrive.getColonne()) {
+                    return true;
+                } else if (caseDepart.getColonne() - caseArrive.getColonne() == 1
+                        || caseArrive.getColonne() - caseDepart.getColonne() == 1) {
+                    return true;
+                }
+            } else if (caseDepart.getRangee() == caseArrive.getRangee()
+                    && caseDepart.getColonne() - caseArrive.getColonne() == 1
+                    || caseArrive.getColonne() - caseDepart.getColonne() == 1) {
+                return true;
+            }
+        }
+        return false;
     }
 }

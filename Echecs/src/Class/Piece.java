@@ -16,7 +16,7 @@ public abstract class Piece {
     private String nom;
     private int couleur;
     private int type;
-    private boolean positionInitiale;
+    private int nbDeplacement;
     private EchecModel echec_m;
 
     public Piece(String _nom, int _couleur, int _type, EchecModel _echec_m) {
@@ -24,7 +24,7 @@ public abstract class Piece {
         this.couleur = _couleur;
         this.type = _type;
         this.echec_m = _echec_m;
-        this.positionInitiale = true;
+        this.nbDeplacement = 0;
     }
 
     //GET
@@ -44,12 +44,20 @@ public abstract class Piece {
         return echec_m;
     }
 
-    public boolean estEnPositionInitiale() {
-        return positionInitiale;
+    public int getNbDeplacement() {
+        return nbDeplacement;
     }
 
-    public void setPositionInitiale(boolean b) {
-        this.positionInitiale = b;
+    public void setNbDeplacement(int nbDeplacement) {
+        this.nbDeplacement = nbDeplacement;
+    }
+
+    public boolean estEnPositionInitiale() {
+        return nbDeplacement == 0;
+    }
+
+    public void incrementeNbDeplacement() {
+        nbDeplacement++;
     }
 
     public abstract boolean deplacementPossible(Case caseArrive, Case caseDepart);

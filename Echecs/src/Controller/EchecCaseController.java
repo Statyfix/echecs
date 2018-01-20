@@ -40,7 +40,7 @@ public class EchecCaseController extends MouseAdapter {
             echec_m.avertirObservateurs(caseReferente);
         } else if (!caseReferente.estEnDeplacement()
                 && caseEnDeplacement != null) {
-            echec_m.jouer(caseReferente, caseEnDeplacement);
+            echec_m.jouer(caseEnDeplacement, caseReferente);
         }
 
     }

@@ -82,6 +82,7 @@ public class EchecModel {
 
     public void nouvellePartie() {
 
+        joueurEnJeu = 0;
         int couleur = 1;
 
         for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
@@ -127,21 +128,89 @@ public class EchecModel {
         return null;
     }
 
-    public void jouer(Case caseArrive, Case caseDepart) {
+    public void jouer(Case caseDepart, Case caseArrive) {
         if (caseDepart.getPiece().deplacementPossible(caseArrive, caseDepart)) {
-            caseArrive.setPiece(caseDepart.getPiece());
-            caseDepart.setEtat(0);
-            caseDepart.setPiece(null);
-            if (caseArrive.getPiece().estEnPositionInitiale()) {
-                caseArrive.getPiece().setPositionInitiale(false);
-            }
+            jouerPiece(caseDepart, caseArrive);
             joueurSuivant();
-            avertirObservateurs(caseArrive);
+        } else if (caseDepart.getPiece().getType() == 5
+                && roquePossible(caseDepart, caseArrive)) {
+            roquer(caseDepart, caseArrive);
+            joueurSuivant();
+        } else if (caseDepart.getPiece().getType() == 0
+                && priseEnPassantPossible(caseDepart, caseArrive)) {
+            priseEnPassant(caseDepart, caseArrive);
+            joueurSuivant();
         }
     }
 
-    private void joueurSuivant() {
+    public void joueurSuivant() {
         joueurEnJeu = joueurEnJeu == 0 ? 1 : 0;
+    }
+
+    public void jouerPiece(Case caseDepart, Case caseArrive) {
+        caseArrive.setPiece(caseDepart.getPiece());
+        caseDepart.setEtat(0);
+        caseDepart.setPiece(null);
+        caseArrive.getPiece().incrementeNbDeplacement();
+        avertirObservateurs(caseArrive);
+    }
+
+    private boolean roquePossible(Case caseDepart, Case caseArrive) {
+        int rangeeDepart = caseDepart.getRangee();
+        int colonneDepart = caseDepart.getColonne();
+        int colonneArrive = caseArrive.getColonne();
+        if (!caseArrive.estOccupe()
+                && caseDepart.getPiece().estEnPositionInitiale()
+                && caseArrive.getRangee() == rangeeDepart) {
+            if (colonneArrive == colonneDepart + 2
+                    && chercherCase(rangeeDepart, colonneArrive + 1).getPiece().estEnPositionInitiale()
+                    && !chercherCase(rangeeDepart, colonneArrive - 1).estOccupe()) {
+                return true;
+            } else if (colonneArrive == colonneDepart - 3
+                    && chercherCase(rangeeDepart, colonneArrive - 1).getPiece().estEnPositionInitiale()
+                    && !chercherCase(rangeeDepart, colonneArrive + 1).estOccupe()
+                    && !chercherCase(rangeeDepart, colonneArrive + 2).estOccupe()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void roquer(Case caseDepart, Case caseArrive) {
+        int rangeeDepart = caseDepart.getRangee();
+        int colonneDepart = caseDepart.getColonne();
+        int colonneArrive = caseArrive.getColonne();
+        jouerPiece(caseDepart, caseArrive);
+        if (colonneDepart < colonneArrive) {
+            Case caseTour = chercherCase(rangeeDepart, colonneArrive + 1);
+            avertirEnDeplacementObservateurs(caseTour);
+            jouerPiece(caseTour, chercherCase(rangeeDepart, colonneArrive - 1));
+        } else {
+            Case caseTour = chercherCase(rangeeDepart, colonneArrive - 1);
+            avertirEnDeplacementObservateurs(caseTour);
+            jouerPiece(caseTour, chercherCase(rangeeDepart, colonneArrive + 1));
+        }
+    }
+
+    private boolean priseEnPassantPossible(Case caseDepart, Case caseArrive) {
+        int rangeeDepart = caseDepart.getRangee();
+        int rangeeArrive = caseArrive.getRangee();
+        int colonneDepart = caseDepart.getColonne();
+        int colonneArrive = caseArrive.getColonne();
+        Case caseMange = chercherCase(rangeeDepart, colonneArrive);
+        return (rangeeArrive == rangeeDepart - 1
+                || rangeeArrive == rangeeDepart + 1)
+                && (colonneArrive == colonneDepart - 1
+                || colonneArrive == colonneDepart + 1)
+                && caseMange.getPiece().getType() == 0
+                && caseMange.getPiece().getNbDeplacement() == 1;
+    }
+
+    private void priseEnPassant(Case caseDepart, Case caseArrive) {
+        Case caseMange = chercherCase(caseDepart.getRangee(), caseArrive.getColonne());
+        avertirEnDeplacementObservateurs(caseMange);
+        jouerPiece(caseMange, caseArrive);
+        jouerPiece(caseDepart, caseArrive);
     }
 
 }
