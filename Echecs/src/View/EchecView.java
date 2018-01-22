@@ -6,7 +6,7 @@
 package View;
 
 import Class.Case;
-import Controller.EchecCaseController;
+import Controller.EchecController;
 import Model.EchecModel;
 import java.awt.Cursor;
 import java.awt.GridLayout;
@@ -135,8 +135,7 @@ public class EchecView extends JFrame implements Observateur {
                 jPanelEchiquier.add(jlEchiquier[i][j]);
 
                 //Ajout d'un mouse listener
-                jlEchiquier[i][j].addMouseListener(
-                        new EchecCaseController(m_echec.chercherCase(i, j), m_echec));
+                jlEchiquier[i][j].addMouseListener(new EchecController(m_echec.chercherCase(i, j), m_echec));
             }
         }
         this.add(jPanelEchiquier);
@@ -175,9 +174,6 @@ public class EchecView extends JFrame implements Observateur {
                 }
             }
         }
-    }
-
-    public void majGraphique(int i, int j) {
     }
 
     @Override

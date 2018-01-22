@@ -14,7 +14,7 @@ public class Case {
     private Piece piece;
     private int rangee;
     private int colonne;
-    private int etat; //0=la pièce est posé || 1 = la pièce est entrain d'être déplacé
+    private boolean enDeplacement; 
 
     public Case() {
 
@@ -23,7 +23,7 @@ public class Case {
     public Case(int _rangee, int _colonne) {
         this.rangee = _rangee;
         this.colonne = _colonne;
-        this.etat = 0;
+        this.enDeplacement = false;
     }
 
     //GET ET SET
@@ -39,14 +39,19 @@ public class Case {
         return colonne;
     }
 
-    public void setEtat(int etat) {
-        this.etat = etat;
+    public boolean estEnDeplacement() {
+        return enDeplacement;
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
 
+    public void setEnDeplacement(boolean enDeplacement) {
+        this.enDeplacement = enDeplacement;
+    }
+
+    // FONCTIONS
     public boolean estOccupe() {
         return (piece != null);
     }
@@ -57,9 +62,5 @@ public class Case {
         } else {
             return (piece.getCouleur() == couleur);
         }
-    }
-
-    public boolean estEnDeplacement() {
-        return etat == 1;
     }
 }

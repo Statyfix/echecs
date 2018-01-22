@@ -18,7 +18,7 @@ public class Roi extends Piece {
     }
 
     @Override
-    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+    public boolean deplacementPossible(Case caseDepart, Case caseArrive) {
         if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
             if (caseDepart.getRangee() - caseArrive.getRangee() == 1
                     || caseArrive.getRangee() - caseDepart.getRangee() == 1) {

@@ -18,7 +18,7 @@ public class Reine extends Piece {
     }
 
     @Override
-    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+    public boolean deplacementPossible(Case caseDepart, Case caseArrive) {
         if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
             if (caseArrive.getColonne() == caseDepart.getColonne()) {
                 if (caseArrive.getRangee() > caseDepart.getRangee()) {

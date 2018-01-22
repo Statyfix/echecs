@@ -87,7 +87,7 @@ public class EchecModel {
 
         for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
             for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
-                echiquier[rangee][colonne].setEtat(0);
+                echiquier[rangee][colonne].setEnDeplacement(false);
                 echiquier[rangee][colonne].setPiece(null);
                 if (rangee == 1 || rangee == 6) {
                     if (rangee == 6) {
@@ -129,7 +129,7 @@ public class EchecModel {
     }
 
     public void jouer(Case caseDepart, Case caseArrive) {
-        if (caseDepart.getPiece().deplacementPossible(caseArrive, caseDepart)) {
+        if (caseDepart.getPiece().deplacementPossible(caseDepart, caseArrive)) {
             jouerPiece(caseDepart, caseArrive);
             joueurSuivant();
         } else if (caseDepart.getPiece().getType() == 5
@@ -149,7 +149,7 @@ public class EchecModel {
 
     public void jouerPiece(Case caseDepart, Case caseArrive) {
         caseArrive.setPiece(caseDepart.getPiece());
-        caseDepart.setEtat(0);
+        caseDepart.setEnDeplacement(false);
         caseDepart.setPiece(null);
         caseArrive.getPiece().incrementeNbDeplacement();
         avertirObservateurs(caseArrive);

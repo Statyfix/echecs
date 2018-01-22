@@ -15,13 +15,13 @@ import java.awt.event.MouseEvent;
  *
  * @author vmachu
  */
-public class EchecCaseController extends MouseAdapter {
+public class EchecController extends MouseAdapter {
 
     private Case caseReferente;
 
     private EchecModel echec_m;
 
-    public EchecCaseController(Case _caseReferente, EchecModel _echec_m) {
+    public EchecController(Case _caseReferente, EchecModel _echec_m) {
         this.caseReferente = _caseReferente;
         this.echec_m = _echec_m;
     }
@@ -29,14 +29,14 @@ public class EchecCaseController extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         Case caseEnDeplacement = echec_m.rechercherPieceEnDeplacement();
-        if (caseReferente.estOccupe()
+        if (caseEnDeplacement == null //si aucune piece n'est en déplacement
+                && caseReferente.estOccupe()
                 && echec_m.getJoueurEnJeu() == caseReferente.getPiece().getCouleur()
-                && !caseReferente.estEnDeplacement()
-                && caseEnDeplacement == null) { // et si aucune piece n'est en déplacement
-            caseReferente.setEtat(1);
+                && !caseReferente.estEnDeplacement()) { 
+            caseReferente.setEnDeplacement(true);
             echec_m.avertirEnDeplacementObservateurs(caseReferente);
         } else if (caseReferente.estEnDeplacement()) {
-            caseReferente.setEtat(0);
+            caseReferente.setEnDeplacement(false);
             echec_m.avertirObservateurs(caseReferente);
         } else if (!caseReferente.estEnDeplacement()
                 && caseEnDeplacement != null) {

@@ -18,36 +18,42 @@ public class Pion extends Piece {
     }
 
     @Override
-    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
+    public boolean deplacementPossible(Case caseDepart, Case caseArrive) {
         if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
+            int rangeeDepart = caseDepart.getRangee();
+            int rangeeArrive = caseArrive.getRangee();
+            int colonneDepart = caseDepart.getColonne();
+            int colonneArrive = caseArrive.getColonne();
             if (super.getCouleur() == 0) { //pour les pions blancs
-                if (caseArrive.getRangee() == caseDepart.getRangee() - 1) {
+                if (rangeeArrive == rangeeDepart - 1) {
                     if (!caseArrive.estOccupe()
-                            && caseArrive.getColonne() == caseDepart.getColonne()) {
+                            && colonneArrive == colonneDepart) {
                         return true;
                     } else if (caseArrive.estOccupe()
-                            && (caseArrive.getColonne() == caseDepart.getColonne() - 1
-                            || caseArrive.getColonne() == caseDepart.getColonne() + 1)) {
+                            && (colonneArrive == colonneDepart - 1
+                            || colonneArrive == colonneDepart + 1)) {
                         return true;
                     }
                 } else if (!caseArrive.estOccupe() && super.estEnPositionInitiale()
-                        && caseArrive.getRangee() == caseDepart.getRangee() - 2
-                        && caseArrive.getColonne() == caseDepart.getColonne()) {
+                        && rangeeArrive == rangeeDepart - 2
+                        && colonneArrive == colonneDepart
+                        && !super.getEchec_m().chercherCase(rangeeArrive + 1, colonneArrive).estOccupe()) {
                     return true;
                 }
             } else if (super.getCouleur() == 1) { //pour les pions noirs
-                if (caseArrive.getRangee() == caseDepart.getRangee() + 1) {
+                if (rangeeArrive == rangeeDepart + 1) {
                     if (!caseArrive.estOccupe()
-                            && caseArrive.getColonne() == caseDepart.getColonne()) {
+                            && colonneArrive == colonneDepart) {
                         return true;
                     } else if (caseArrive.estOccupe()
-                            && (caseArrive.getColonne() == caseDepart.getColonne() - 1
-                            || caseArrive.getColonne() == caseDepart.getColonne() + 1)) {
+                            && (colonneArrive == colonneDepart - 1
+                            || colonneArrive == colonneDepart + 1)) {
                         return true;
                     }
                 } else if (!caseArrive.estOccupe() && super.estEnPositionInitiale()
-                        && caseArrive.getRangee() == caseDepart.getRangee() + 2
-                        && caseArrive.getColonne() == caseDepart.getColonne()) {
+                        && rangeeArrive == rangeeDepart + 2
+                        && colonneArrive == colonneDepart
+                        && !super.getEchec_m().chercherCase(rangeeArrive - 1, colonneArrive).estOccupe()) {
                     return true;
                 }
             }

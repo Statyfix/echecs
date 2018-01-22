@@ -60,6 +60,6 @@ public abstract class Piece {
         nbDeplacement++;
     }
 
-    public abstract boolean deplacementPossible(Case caseArrive, Case caseDepart);
+    public abstract boolean deplacementPossible(Case caseDepart, Case caseArrive);
 
 }

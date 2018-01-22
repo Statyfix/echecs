@@ -18,45 +18,48 @@ public class Fou extends Piece {
     }
 
     @Override
-    public boolean deplacementPossible(Case caseArrive, Case caseDepart) {
-        if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
+    public boolean deplacementPossible(Case caseDepart, Case caseArrive) {
+        if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {//si la case n'est pas occupé par une pièce de la couleur de celle joué
             int rangee = caseDepart.getRangee();
             int colonne = caseDepart.getColonne();
-            if (rangee < caseArrive.getRangee() && colonne < caseArrive.getColonne()) {
+            int rangeeArrive = caseArrive.getRangee();
+            int colonneArrive = caseArrive.getColonne();
+
+            if (rangee < rangeeArrive && colonne < colonneArrive) {
                 while (colonne <= 8 && rangee <= 8) {
                     rangee++;
                     colonne++;
-                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                    if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
                     } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
-            } else if (rangee > caseArrive.getRangee() && colonne > caseArrive.getColonne()) {
+            } else if (rangee > rangeeArrive && colonne > colonneArrive) {
                 while (colonne <= 8 && rangee <= 8) {
                     rangee--;
                     colonne--;
-                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                    if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
                     } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
-            } else if (rangee > caseArrive.getRangee() && colonne < caseArrive.getColonne()) {
+            } else if (rangee > rangeeArrive && colonne < colonneArrive) {
                 while (colonne <= 8 && rangee <= 8) {
                     rangee--;
                     colonne++;
-                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                    if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
                     } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
-            } else if (rangee < caseArrive.getRangee() && colonne > caseArrive.getColonne()) {
+            } else if (rangee < rangeeArrive && colonne > colonneArrive) {
                 while (colonne <= 8 && rangee <= 8) {
                     rangee++;
                     colonne--;
-                    if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
+                    if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
                     } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
