@@ -6,42 +6,61 @@
 package Controller;
 
 import Class.Case;
-import Class.Piece;
 import Model.EchecModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import View.Observateur;
+import java.util.ArrayList;
 
 /**
  *
  * @author vmachu
  */
-public class EchecController extends MouseAdapter {
+public class EchecController {
 
-    private Case caseReferente;
+    private final ArrayList<Observateur> observateurs;
+    private final EchecModel echec_m;
 
-    private EchecModel echec_m;
-
-    public EchecController(Case _caseReferente, EchecModel _echec_m) {
-        this.caseReferente = _caseReferente;
-        this.echec_m = _echec_m;
+    public EchecController() {
+        this.observateurs = new ArrayList<>();
+        this.echec_m = new EchecModel(this);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        Case caseEnDeplacement = echec_m.rechercherPieceEnDeplacement();
-        if (caseEnDeplacement == null //si aucune piece n'est en déplacement
-                && caseReferente.estOccupe()
-                && echec_m.getJoueurEnJeu() == caseReferente.getPiece().getCouleur()
-                && !caseReferente.estEnDeplacement()) { 
-            caseReferente.setEnDeplacement(true);
-            echec_m.avertirEnDeplacementObservateurs(caseReferente);
-        } else if (caseReferente.estEnDeplacement()) {
-            caseReferente.setEnDeplacement(false);
-            echec_m.avertirObservateurs(caseReferente);
-        } else if (!caseReferente.estEnDeplacement()
-                && caseEnDeplacement != null) {
-            echec_m.jouer(caseEnDeplacement, caseReferente);
-        }
+    public EchecModel getEchec_m() {
+        return echec_m;
+    }
 
+    public void ajouterObservateur(Observateur observateur) {
+        observateurs.add(observateur);
+    }
+
+    public void retirerObservateur(Observateur observateur) {
+        observateurs.remove(observateur);
+    }
+
+    public void avertirObservateurs(Case caseReferente) {
+        for (Observateur o : observateurs) {
+            o.avertir(caseReferente);
+        }
+    }
+
+    public void avertirEnDeplacementObservateurs(Case caseReferente) {
+        for (Observateur o : observateurs) {
+            o.avertirEnDeplacement(caseReferente);
+        }
+    }
+
+    public void avertirNouvellePartieObservateurs() {
+        for (Observateur o : observateurs) {
+            o.avertirNouvellePartie(echec_m.getEchiquier());
+        }
+    }
+
+    public void avertirFinPartieAllObservateurs() {
+        for (Observateur o : observateurs) {
+            o.avertirFinPartie();
+        }
+    }
+
+    public void nouvellePartie() {
+        echec_m.nouvellePartie();
     }
 }

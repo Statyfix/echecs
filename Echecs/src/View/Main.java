@@ -5,26 +5,23 @@
  */
 package View;
 
-import Model.EchecModel;
+import Controller.EchecController;
 import View.EchecView;
 
 /**
  *
- * @author UTILISATEUR
+ * @author vmachu
  */
 public class Main {
 
     public static void main(String[] args) {
         
-        EchecModel model = new EchecModel();
-        EchecView view1 = new EchecView(model);
-//        EchecView view2 = new EchecView(model);
+        EchecController echec_c = new EchecController();
+        EchecView echec_v = new EchecView(echec_c);
 
         //ajout de la vue au modele comme observateur
-        model.ajouterObservateur(view1);
-//        model.ajouterObservateur(view2);
+        echec_c.ajouterObservateur(echec_v);
 
-        view1.setVisible(true);
-//        view2.setVisible(true);
+        echec_v.setVisible(true);
     }
 }

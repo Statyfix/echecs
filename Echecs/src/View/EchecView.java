@@ -6,8 +6,9 @@
 package View;
 
 import Class.Case;
+import Class.Echiquier;
+import Controller.CaseController;
 import Controller.EchecController;
-import Model.EchecModel;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -22,7 +23,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author UTILISATEUR
+ * @author vmachu
  */
 public class EchecView extends JFrame implements Observateur {
 
@@ -37,19 +38,19 @@ public class EchecView extends JFrame implements Observateur {
     private static final int TAILLE = 8;
 
     //le menu
-    private JMenuBar jMenuBar1;
-    private JMenu nouvellePartie;
-    private JMenu quitter;
+    private final JMenuBar jMenuBar1;
+    private final JMenu nouvellePartie;
+    private final JMenu quitter;
 
     //L'échiquier
-    private JPanel jPanelEchiquier;
-    private JLabel[][] jlEchiquier; // Le plateau
+    private final JPanel jPanelEchiquier;
+    private final JLabel[][] jlEchiquier; // Le plateau
 
-    private EchecModel m_echec; // Le jeu
+    private final EchecController echec_c; // Le jeu
 
-    public EchecView(EchecModel _echec) {
+    public EchecView(EchecController _echec_c) {
 
-        this.imgPieces = new ImageIcon[3][2][9];
+        EchecView.imgPieces = new ImageIcon[3][2][9];
 
         imgPieces[0][0][0] = new ImageIcon("./src/imgs/blanches/PB_B.png");
         imgPieces[1][0][0] = new ImageIcon("./src/imgs/blanches/PB_N.png");
@@ -118,7 +119,7 @@ public class EchecView extends JFrame implements Observateur {
         jPanelEchiquier = new JPanel();
         jPanelEchiquier.setLayout(new GridLayout(TAILLE, TAILLE));//définit la taille de la grille de 8 sur 8
 
-        this.m_echec = _echec;
+        this.echec_c = _echec_c;
 
         this.jlEchiquier = new JLabel[TAILLE][TAILLE];
 
@@ -135,7 +136,7 @@ public class EchecView extends JFrame implements Observateur {
                 jPanelEchiquier.add(jlEchiquier[i][j]);
 
                 //Ajout d'un mouse listener
-                jlEchiquier[i][j].addMouseListener(new EchecController(m_echec.chercherCase(i, j), m_echec));
+                jlEchiquier[i][j].addMouseListener(new CaseController(echec_c.getEchec_m().getEchiquier().chercherCase(i, j), echec_c));
             }
         }
         this.add(jPanelEchiquier);
@@ -144,29 +145,28 @@ public class EchecView extends JFrame implements Observateur {
     }
 
     private void nouvellePartieMouseClicked(java.awt.event.MouseEvent evt) {
-        m_echec.nouvellePartie();
+        echec_c.nouvellePartie();
     }
 
     private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
         this.dispose();
     }
 
-    void initiatlisationEchiquier() {
+    void initiatlisationEchiquier(Echiquier echiquier) {
         for (int rangee = 0; rangee < TAILLE; rangee++) {
             for (int colonne = 0; colonne < TAILLE; colonne++) {
-                Case[][] echiquier = EchecModel.getEchiquier();//recuperation des pieces sur l'echiquier
                 if ((rangee + colonne) % 2 == 0) { //changement de la couleur une fois sur deux
-                    if (echiquier[rangee][colonne].estOccupe()) {
-                        int couleurPiece = echiquier[rangee][colonne].getPiece().getCouleur();
-                        int typePiece = echiquier[rangee][colonne].getPiece().getType();
+                    if (echiquier.chercherCase(rangee, colonne).estOccupe()) {
+                        int couleurPiece = echiquier.chercherCase(rangee, colonne).getPiece().getCouleur();
+                        int typePiece = echiquier.chercherCase(rangee, colonne).getPiece().getType();
                         jlEchiquier[rangee][colonne].setIcon(imgPieces[0][couleurPiece][typePiece]);
                     } else {
                         jlEchiquier[rangee][colonne].setIcon(CASE_BLANC);
                     }
                 } else {
-                    if (echiquier[rangee][colonne].estOccupe()) {
-                        int couleurPiece = echiquier[rangee][colonne].getPiece().getCouleur();
-                        int typePiece = echiquier[rangee][colonne].getPiece().getType();
+                    if (echiquier.chercherCase(rangee, colonne).estOccupe()) {
+                        int couleurPiece = echiquier.chercherCase(rangee, colonne).getPiece().getCouleur();
+                        int typePiece = echiquier.chercherCase(rangee, colonne).getPiece().getType();
                         jlEchiquier[rangee][colonne].setIcon(imgPieces[1][couleurPiece][typePiece]);
                     } else {
                         jlEchiquier[rangee][colonne].setIcon(CASE_NOIR);
@@ -196,8 +196,8 @@ public class EchecView extends JFrame implements Observateur {
     }
 
     @Override
-    public void avertirNouvellePartie() {
-        initiatlisationEchiquier();
+    public void avertirNouvellePartie(Echiquier echiquier) {
+        initiatlisationEchiquier(echiquier);
     }
 
     @Override

@@ -13,8 +13,8 @@ import Model.EchecModel;
  */
 public class Cavalier extends Piece {
 
-    public Cavalier(int couleur, EchecModel _echec_m) {
-        super("Cavalier", couleur, 2, _echec_m);
+    public Cavalier(int couleur, Echiquier _echiquier) {
+        super("Cavalier", couleur, 2, _echiquier);
     }
 
     @Override

@@ -13,8 +13,8 @@ import Model.EchecModel;
  */
 public class Reine extends Piece {
 
-    public Reine(int couleur, EchecModel _echec_m) {
-        super("Reine", couleur, 4, _echec_m);
+    public Reine(int couleur, Echiquier _echuiquier) {
+        super("Reine", couleur, 4, _echuiquier);
     }
 
     @Override
@@ -23,14 +23,14 @@ public class Reine extends Piece {
             if (caseArrive.getColonne() == caseDepart.getColonne()) {
                 if (caseArrive.getRangee() > caseDepart.getRangee()) {
                     for (int rangee = caseDepart.getRangee() + 1; rangee < caseArrive.getRangee(); rangee++) {
-                        if (super.getEchec_m().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
                             return false;
                         }
                     }
                     return true;
                 } else {
                     for (int rangee = caseDepart.getRangee() - 1; rangee > caseArrive.getRangee(); rangee--) {
-                        if (super.getEchec_m().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
                             return false;
                         }
                     }
@@ -39,14 +39,14 @@ public class Reine extends Piece {
             } else if (caseArrive.getRangee() == caseDepart.getRangee()) {
                 if (caseArrive.getColonne() > caseDepart.getColonne()) {
                     for (int colonne = caseDepart.getColonne() + 1; colonne < caseArrive.getColonne(); colonne++) {
-                        if (super.getEchec_m().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
                             return false;
                         }
                     }
                     return true;
                 } else {
                     for (int colonne = caseDepart.getColonne() - 1; colonne > caseArrive.getColonne(); colonne--) {
-                        if (super.getEchec_m().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
                             return false;
                         }
                     }
@@ -62,7 +62,7 @@ public class Reine extends Piece {
                         colonne++;
                         if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
                             return true;
-                        } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                             return false;
                         }
                     }
@@ -72,7 +72,7 @@ public class Reine extends Piece {
                         colonne--;
                         if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
                             return true;
-                        } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                             return false;
                         }
                     }
@@ -82,7 +82,7 @@ public class Reine extends Piece {
                         colonne++;
                         if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
                             return true;
-                        } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                             return false;
                         }
                     }
@@ -92,7 +92,7 @@ public class Reine extends Piece {
                         colonne--;
                         if (rangee == caseArrive.getRangee() && colonne == caseArrive.getColonne()) {
                             return true;
-                        } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                        } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                             return false;
                         }
                     }

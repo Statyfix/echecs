@@ -13,8 +13,8 @@ import Model.EchecModel;
  */
 public class Tour extends Piece {
 
-    public Tour(int couleur, EchecModel _echec_m) {
-        super("Tour", couleur, 1, _echec_m);
+    public Tour(int couleur, Echiquier _echiquier) {
+        super("Tour", couleur, 1, _echiquier);
     }
 
     @Override
@@ -23,14 +23,14 @@ public class Tour extends Piece {
             if (caseArrive.getColonne() == caseDepart.getColonne()) {
                 if (caseArrive.getRangee() > caseDepart.getRangee()) {
                     for (int rangee = caseDepart.getRangee() + 1; rangee < caseArrive.getRangee(); rangee++) {
-                        if (super.getEchec_m().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
                             return false;
                         }
                     }
                     return true;
                 } else {
                     for (int rangee = caseDepart.getRangee() - 1; rangee > caseArrive.getRangee(); rangee--) {
-                        if (super.getEchec_m().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(rangee, caseDepart.getColonne()).estOccupe()) {
                             return false;
                         }
                     }
@@ -39,14 +39,14 @@ public class Tour extends Piece {
             } else if (caseArrive.getRangee() == caseDepart.getRangee()) {
                 if (caseArrive.getColonne() > caseDepart.getColonne()) {
                     for (int colonne = caseDepart.getColonne() + 1; colonne < caseArrive.getColonne(); colonne++) {
-                        if (super.getEchec_m().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
                             return false;
                         }
                     }
                     return true;
                 } else {
                     for (int colonne = caseDepart.getColonne() - 1; colonne > caseArrive.getColonne(); colonne--) {
-                        if (super.getEchec_m().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
+                        if (super.getEchiquier().chercherCase(caseDepart.getRangee(), colonne).estOccupe()) {
                             return false;
                         }
                     }

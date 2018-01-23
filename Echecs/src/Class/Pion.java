@@ -13,8 +13,8 @@ import Model.EchecModel;
  */
 public class Pion extends Piece {
 
-    public Pion(int couleur, EchecModel _echec_m) {
-        super("Pion", couleur, 0, _echec_m);
+    public Pion(int couleur, Echiquier _echiquier) {
+        super("Pion", couleur, 0, _echiquier);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Pion extends Piece {
                 } else if (!caseArrive.estOccupe() && super.estEnPositionInitiale()
                         && rangeeArrive == rangeeDepart - 2
                         && colonneArrive == colonneDepart
-                        && !super.getEchec_m().chercherCase(rangeeArrive + 1, colonneArrive).estOccupe()) {
+                        && !super.getEchiquier().chercherCase(rangeeArrive + 1, colonneArrive).estOccupe()) {
                     return true;
                 }
             } else if (super.getCouleur() == 1) { //pour les pions noirs
@@ -53,7 +53,7 @@ public class Pion extends Piece {
                 } else if (!caseArrive.estOccupe() && super.estEnPositionInitiale()
                         && rangeeArrive == rangeeDepart + 2
                         && colonneArrive == colonneDepart
-                        && !super.getEchec_m().chercherCase(rangeeArrive - 1, colonneArrive).estOccupe()) {
+                        && !super.getEchiquier().chercherCase(rangeeArrive - 1, colonneArrive).estOccupe()) {
                     return true;
                 }
             }

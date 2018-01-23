@@ -1,6 +1,7 @@
 package View;
 
 import Class.Case;
+import Class.Echiquier;
 
 /**
  *
@@ -8,7 +9,7 @@ import Class.Case;
  */
 public interface Observateur {
 
-    public void avertirNouvellePartie();
+    public void avertirNouvellePartie(Echiquier echiquier);
 
     public void avertirFinPartie();
 

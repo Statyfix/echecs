@@ -5,12 +5,11 @@
  */
 package Class;
 
+import Controller.EchecController;
 import Model.EchecModel;
 import java.util.ArrayList;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -24,6 +23,7 @@ public class CavalierTest {
     private Case caseDepart;
     private Case caseArrive;
     private EchecModel echec_m;
+    private EchecController echec_c;
 
     public CavalierTest() {
     }
@@ -31,9 +31,9 @@ public class CavalierTest {
     @Before
     public void setUp() {
         this.caseDepart = new Case(4, 4);
-        this.echec_m = new EchecModel();
-        this.cavalier = new Cavalier(0, this.echec_m);
-        caseDepart.setPiece(new Cavalier(0, echec_m));
+        this.echec_c = new EchecController();
+        this.cavalier = new Cavalier(0, echec_c.getEchec_m().getEchiquier());
+        caseDepart.setPiece(new Cavalier(0, echec_c.getEchec_m().getEchiquier()));
     }
 
     @After

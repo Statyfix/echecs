@@ -5,8 +5,6 @@
  */
 package Class;
 
-import Model.EchecModel;
-
 /**
  *
  * @author vmachu
@@ -17,13 +15,13 @@ public abstract class Piece {
     private int couleur;
     private int type;
     private int nbDeplacement;
-    private EchecModel echec_m;
+    private Echiquier echiquier;
 
-    public Piece(String _nom, int _couleur, int _type, EchecModel _echec_m) {
+    public Piece(String _nom, int _couleur, int _type, Echiquier _echiquier) {
         this.nom = _nom;
         this.couleur = _couleur;
         this.type = _type;
-        this.echec_m = _echec_m;
+        this.echiquier = _echiquier;
         this.nbDeplacement = 0;
     }
 
@@ -40,12 +38,12 @@ public abstract class Piece {
         return type;
     }
 
-    public EchecModel getEchec_m() {
-        return echec_m;
-    }
-
     public int getNbDeplacement() {
         return nbDeplacement;
+    }
+
+    public Echiquier getEchiquier() {
+        return echiquier;
     }
 
     public void setNbDeplacement(int nbDeplacement) {

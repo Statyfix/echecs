@@ -5,16 +5,14 @@
  */
 package Class;
 
-import Model.EchecModel;
-
 /**
  *
  * @author UTILISATEUR
  */
 public class Fou extends Piece {
 
-    public Fou(int couleur, EchecModel _echec_m) {
-        super("Fou", couleur, 3, _echec_m);
+    public Fou(int couleur, Echiquier _echiquier) {
+        super("Fou", couleur, 3, _echiquier);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class Fou extends Piece {
                     colonne++;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
-                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                    } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
@@ -41,7 +39,7 @@ public class Fou extends Piece {
                     colonne--;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
-                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                    } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
@@ -51,7 +49,7 @@ public class Fou extends Piece {
                     colonne++;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
-                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                    } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
@@ -61,7 +59,7 @@ public class Fou extends Piece {
                     colonne--;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
                         return true;
-                    } else if (super.getEchec_m().chercherCase(rangee, colonne).estOccupe()) {
+                    } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
                 }
