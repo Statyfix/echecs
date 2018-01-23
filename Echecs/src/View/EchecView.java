@@ -9,10 +9,12 @@ import Class.Case;
 import Class.Echiquier;
 import Controller.CaseController;
 import Controller.EchecController;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -152,7 +154,7 @@ public class EchecView extends JFrame implements Observateur {
         this.dispose();
     }
 
-    void initiatlisationEchiquier(Echiquier echiquier) {
+    public void majEchiquier(Echiquier echiquier) {
         for (int rangee = 0; rangee < TAILLE; rangee++) {
             for (int colonne = 0; colonne < TAILLE; colonne++) {
                 if ((rangee + colonne) % 2 == 0) { //changement de la couleur une fois sur deux
@@ -193,11 +195,32 @@ public class EchecView extends JFrame implements Observateur {
         } else {
             jlEchiquier[rangee][colonne].setIcon(CASE_NOIR);
         }
+
     }
 
     @Override
-    public void avertirNouvellePartie(Echiquier echiquier) {
-        initiatlisationEchiquier(echiquier);
+    public void avertirDeplacementsPossible(boolean[][] deplacementsPossible) {
+        for (int rangee = 0; rangee < TAILLE; rangee++) {
+            for (int colonne = 0; colonne < TAILLE; colonne++) {
+                if (deplacementsPossible[rangee][colonne]) {
+                    jlEchiquier[rangee][colonne].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void avertirEffacerDeplacementsPossible() {
+        for (int rangee = 0; rangee < TAILLE; rangee++) {
+            for (int colonne = 0; colonne < TAILLE; colonne++) {
+                jlEchiquier[rangee][colonne].setBorder(null);
+            }
+        }
+    }
+
+    @Override
+    public void avertirMajEchiquier(Echiquier echiquier) {
+        majEchiquier(echiquier);
     }
 
     @Override

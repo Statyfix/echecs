@@ -19,13 +19,13 @@ public class Roi extends Piece {
 
     @Override
     public boolean deplacementPossible(Case caseDepart, Case caseArrive) {
-        if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {
-            if (caseDepart.getRangee() - caseArrive.getRangee() == 1
-                    || caseArrive.getRangee() - caseDepart.getRangee() == 1) {
-                if (caseDepart.getColonne() == caseArrive.getColonne()) {
+        if (!caseArrive.estOccupePar(caseDepart.getPiece().getCouleur())) {//si la case n'est pas occupé par une pièce de la couleur de celle joué
+            if (caseDepart.getRangee() - caseArrive.getRangee() == 1 // si le roi va vers le haut
+                    || caseArrive.getRangee() - caseDepart.getRangee() == 1) {// ou verrs le bas
+                if (caseDepart.getColonne() == caseArrive.getColonne()) {// si le roi reste sur la même colonne
                     return true;
-                } else if (caseDepart.getColonne() - caseArrive.getColonne() == 1
-                        || caseArrive.getColonne() - caseDepart.getColonne() == 1) {
+                } else if (caseDepart.getColonne() - caseArrive.getColonne() == 1   // si le roi va en haut ou en bas à gauche
+                        || caseArrive.getColonne() - caseDepart.getColonne() == 1) {// si le roi va en haut ou en bas à droite
                     return true;
                 }
             } else if (caseDepart.getRangee() == caseArrive.getRangee()

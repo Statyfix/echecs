@@ -47,10 +47,22 @@ public class EchecController {
             o.avertirEnDeplacement(caseReferente);
         }
     }
-
-    public void avertirNouvellePartieObservateurs() {
+    
+    public void avertirDeplacementsPossibleObservateurs(boolean[][] casesDeplacementPossible) {
         for (Observateur o : observateurs) {
-            o.avertirNouvellePartie(echec_m.getEchiquier());
+            o.avertirDeplacementsPossible(casesDeplacementPossible);
+        }
+    }
+    
+    public void avertirEffacerDeplacementsPossibleObservateurs() {
+        for (Observateur o : observateurs) {
+            o.avertirEffacerDeplacementsPossible();
+        }
+    }
+
+    public void avertirMajEchiquierObservateurs() {
+        for (Observateur o : observateurs) {
+            o.avertirMajEchiquier(echec_m.getEchiquier());
         }
     }
 

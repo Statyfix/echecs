@@ -24,7 +24,7 @@ public class Fou extends Piece {
             int colonneArrive = caseArrive.getColonne();
 
             if (rangee < rangeeArrive && colonne < colonneArrive) {
-                while (colonne <= 8 && rangee <= 8) {
+                while (colonne < 7 && rangee < 7) {
                     rangee++;
                     colonne++;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
@@ -34,7 +34,7 @@ public class Fou extends Piece {
                     }
                 }
             } else if (rangee > rangeeArrive && colonne > colonneArrive) {
-                while (colonne <= 8 && rangee <= 8) {
+                while (colonne > 0 && rangee > 0) {
                     rangee--;
                     colonne--;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
@@ -44,7 +44,7 @@ public class Fou extends Piece {
                     }
                 }
             } else if (rangee > rangeeArrive && colonne < colonneArrive) {
-                while (colonne <= 8 && rangee <= 8) {
+                while (colonne < 7 && rangee > 0) {
                     rangee--;
                     colonne++;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
@@ -54,7 +54,7 @@ public class Fou extends Piece {
                     }
                 }
             } else if (rangee < rangeeArrive && colonne > colonneArrive) {
-                while (colonne <= 8 && rangee <= 8) {
+                while (colonne > 0 && rangee < 7) {
                     rangee++;
                     colonne--;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {

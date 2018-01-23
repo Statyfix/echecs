@@ -73,7 +73,7 @@ public class EchecModel {
 
         finPartie = false; // Ce n'est pas la fin de la partie
 
-        echec_c.avertirNouvellePartieObservateurs();
+        echec_c.avertirMajEchiquierObservateurs();
     }
 
     public void jouer(Case caseDepart, Case caseArrive) {
@@ -159,6 +159,16 @@ public class EchecModel {
         echec_c.avertirEnDeplacementObservateurs(caseMange);
         jouerPiece(caseMange, caseArrive);
         jouerPiece(caseDepart, caseArrive);
+    }
+
+    public boolean[][] deplacementsPossible(Case caseReferente) {
+        boolean[][] deplacementsPossible = new boolean[TAILLE][TAILLE];
+        for (int rangee = 0; rangee < 8; rangee++) {
+            for (int colonne = 0; colonne < 8; colonne++) {//pour chaque case de l'echiquier
+                deplacementsPossible[rangee][colonne] = caseReferente.getPiece().deplacementPossible(caseReferente, echiquier.chercherCase(rangee, colonne));//on stock le resultat du test
+            }
+        }
+        return deplacementsPossible;
     }
 
 }

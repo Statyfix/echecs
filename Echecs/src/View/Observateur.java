@@ -9,11 +9,15 @@ import Class.Echiquier;
  */
 public interface Observateur {
 
-    public void avertirNouvellePartie(Echiquier echiquier);
+    public void avertirMajEchiquier(Echiquier echiquier);
 
     public void avertirFinPartie();
 
     public void avertirEnDeplacement(Case caseEnDeplacement);
+
+    public void avertirDeplacementsPossible(boolean[][] deplacementsPossible);
+    
+    public void avertirEffacerDeplacementsPossible();
 
     public void avertir(Case caseReferente);
 }

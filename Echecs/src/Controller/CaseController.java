@@ -35,12 +35,15 @@ public class CaseController extends MouseAdapter {
                 && !caseReferente.estEnDeplacement()) {
             caseReferente.setEnDeplacement(true);
             echec_c.avertirEnDeplacementObservateurs(caseReferente);
+            echec_c.avertirDeplacementsPossibleObservateurs(echec_m.deplacementsPossible(caseReferente));
         } else if (caseReferente.estEnDeplacement()) {
             caseReferente.setEnDeplacement(false);
             echec_c.avertirObservateurs(caseReferente);
+            echec_c.avertirEffacerDeplacementsPossibleObservateurs();
         } else if (!caseReferente.estEnDeplacement()
                 && caseEnDeplacement != null) {
             echec_m.jouer(caseEnDeplacement, caseReferente);
+            echec_c.avertirEffacerDeplacementsPossibleObservateurs();
         }
 
     }
