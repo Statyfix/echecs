@@ -14,8 +14,6 @@ import Class.Reine;
 import Class.Roi;
 import Class.Tour;
 import Controller.EchecController;
-import View.Observateur;
-import java.util.ArrayList;
 
 /**
  *
@@ -166,6 +164,10 @@ public class EchecModel {
         for (int rangee = 0; rangee < 8; rangee++) {
             for (int colonne = 0; colonne < 8; colonne++) {//pour chaque case de l'echiquier
                 deplacementsPossible[rangee][colonne] = caseReferente.getPiece().deplacementPossible(caseReferente, echiquier.chercherCase(rangee, colonne));//on stock le resultat du test
+                if (caseReferente.getPiece().getType() == 5
+                        && roquePossible(caseReferente, echiquier.chercherCase(rangee, colonne))) {
+                    deplacementsPossible[rangee][colonne] = true;
+                }
             }
         }
         return deplacementsPossible;

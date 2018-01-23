@@ -5,8 +5,6 @@
  */
 package Class;
 
-import Model.EchecModel;
-
 /**
  *
  * @author UTILISATEUR

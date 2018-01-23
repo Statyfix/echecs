@@ -14,7 +14,7 @@ public class Case {
     private Piece piece;
     private int rangee;
     private int colonne;
-    private boolean enDeplacement; 
+    private boolean enDeplacement;
 
     public Case() {
 
