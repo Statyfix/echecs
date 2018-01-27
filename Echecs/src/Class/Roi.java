@@ -40,7 +40,7 @@ public class Roi extends Piece {
             for (int colonne = 0; colonne < 8; colonne++) {//pour chaque case de l'echiquier
                 Piece pieceSusceptibleAttaquer = super.getEchiquier().chercherCase(rangee, colonne).getPiece();
                 if (pieceSusceptibleAttaquer != null // si la case suceptible d'attaquer la case à tester est occupé
-                        && pieceSusceptibleAttaquer.getCouleur() != caseTest.getPiece().getCouleur() //si la couleur de la pièce suceptible d'attaquer la case à tester est différente
+                        && pieceSusceptibleAttaquer.getCouleur() != this.getCouleur() //si la couleur de la pièce suceptible d'attaquer la case à tester est différente
                         && pieceSusceptibleAttaquer.deplacementPossible(super.getEchiquier().chercherCase(rangee, colonne), caseTest)) {// et que la pièce peut s'y déplacer
                     return false;
                 }
