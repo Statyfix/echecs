@@ -58,6 +58,32 @@ public abstract class Piece {
         nbDeplacement++;
     }
 
+    public boolean verifierPasEchecApresDeplacement(Case caseDepart, Case caseArrive) {
+        Piece pieceInitial = caseArrive.estOccupe() ? caseArrive.getPiece() : null;
+        caseDepart.setPiece(null);
+        caseArrive.setPiece(this);//on simule le déplacement de la pièce
+        for (int rangee = 0; rangee < 8; rangee++) {
+            for (int colonne = 0; colonne < 8; colonne++) {//pour chaque case de l'echiquier
+                Roi roi = null;// pour n'importe quelle pièce on met roi à null
+                Case caseSusceptibleRoi = echiquier.chercherCase(rangee, colonne);
+                if (caseSusceptibleRoi.estOccupe() //si la case cherchée est occupée
+                        && caseSusceptibleRoi.getPiece().getType() == 5) {// si la pièce est un roi
+                    roi = (Roi) caseSusceptibleRoi.getPiece();// on stock la pièce
+                }
+                if (roi != null //si la pièce est bien un roi
+                        && roi.getCouleur() == this.getCouleur() //si la couleur du roi est la même
+                        && roi.estEnEchec(caseSusceptibleRoi)) {//et que le roi sera en echec
+                    caseDepart.setPiece(this);
+                    caseArrive.setPiece(pieceInitial);//on remet la pièce comme avant
+                    return false;
+                }
+            }
+        }
+        caseDepart.setPiece(this);
+        caseArrive.setPiece(pieceInitial);//on remet la pièce comme avant
+        return true;
+    }
+
     public abstract boolean deplacementPossible(Case caseDepart, Case caseArrive);
 
 }

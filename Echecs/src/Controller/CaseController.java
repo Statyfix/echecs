@@ -35,7 +35,7 @@ public class CaseController extends MouseAdapter {
                 && !caseReferente.estEnDeplacement()) {
             caseReferente.setEnDeplacement(true);
             echec_c.avertirEnDeplacementObservateurs(caseReferente);
-            echec_c.avertirDeplacementsPossibleObservateurs(echec_m.deplacementsPossible(caseReferente));
+            echec_c.avertirDeplacementsPossibleObservateurs(echec_m.getEchiquier().deplacementsPossible(caseReferente));
         } else if (caseReferente.estEnDeplacement()) {
             caseReferente.setEnDeplacement(false);
             echec_c.avertirObservateurs(caseReferente);

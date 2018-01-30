@@ -31,14 +31,14 @@ public class Tour extends Piece {
                             return false;
                         }
                     }
-                    return true;
+                    return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                 } else {
                     for (int rangee = rangeeDepart - 1; rangee > rangeeArrive; rangee--) {
                         if (super.getEchiquier().chercherCase(rangee, colonneDepart).estOccupe()) {
                             return false;
                         }
                     }
-                    return true;
+                    return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                 }
             } else if (rangeeArrive == rangeeDepart) {
                 if (colonneArrive > colonneDepart) {
@@ -47,14 +47,14 @@ public class Tour extends Piece {
                             return false;
                         }
                     }
-                    return true;
+                    return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                 } else {
                     for (int colonne = colonneDepart - 1; colonne > colonneArrive; colonne--) {
                         if (super.getEchiquier().chercherCase(rangeeDepart, colonne).estOccupe()) {
                             return false;
                         }
                     }
-                    return true;
+                    return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                 }
 
             }

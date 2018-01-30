@@ -248,4 +248,10 @@ public class EchecView extends JFrame implements Observateur {
         }
     }
 
+    @Override
+    public void avertirEchec() {
+        JOptionPane.showMessageDialog(null, "Echec !",
+                "Echec", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

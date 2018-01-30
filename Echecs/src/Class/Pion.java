@@ -26,33 +26,33 @@ public class Pion extends Piece {
                 if (rangeeArrive == rangeeDepart - 1) {
                     if (!caseArrive.estOccupe()
                             && colonneArrive == colonneDepart) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     } else if (caseArrive.estOccupe()
                             && (colonneArrive == colonneDepart - 1
                             || colonneArrive == colonneDepart + 1)) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     }
                 } else if (!caseArrive.estOccupe() && super.estEnPositionInitiale()
                         && rangeeArrive == rangeeDepart - 2
                         && colonneArrive == colonneDepart
                         && !super.getEchiquier().chercherCase(rangeeArrive + 1, colonneArrive).estOccupe()) {
-                    return true;
+                    return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                 }
             } else if (super.getCouleur() == 1) { //pour les pions noirs
                 if (rangeeArrive == rangeeDepart + 1) {
                     if (!caseArrive.estOccupe()
                             && colonneArrive == colonneDepart) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     } else if (caseArrive.estOccupe()
                             && (colonneArrive == colonneDepart - 1
                             || colonneArrive == colonneDepart + 1)) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     }
                 } else if (!caseArrive.estOccupe() && super.estEnPositionInitiale()
                         && rangeeArrive == rangeeDepart + 2
                         && colonneArrive == colonneDepart
                         && !super.getEchiquier().chercherCase(rangeeArrive - 1, colonneArrive).estOccupe()) {
-                    return true;
+                    return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                 }
             }
         }

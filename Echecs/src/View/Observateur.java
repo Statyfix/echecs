@@ -20,4 +20,6 @@ public interface Observateur {
     public void avertirEffacerDeplacementsPossible();
 
     public void avertir(Case caseReferente);
+
+    public void avertirEchec();
 }

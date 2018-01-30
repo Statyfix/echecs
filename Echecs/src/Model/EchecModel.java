@@ -78,8 +78,8 @@ public class EchecModel {
         if (caseDepart.getPiece().deplacementPossible(caseDepart, caseArrive)) {
             jouerPiece(caseDepart, caseArrive);
             joueurSuivant();
-        } else if (caseDepart.getPiece().getType() == 5
-                && roquePossible(caseDepart, caseArrive)) {
+        } else if (caseDepart.getPiece().getType() == 5// si la pièce en déplacement est un roi
+                && echiquier.roquePossible(caseDepart, caseArrive)) {// et que le roque est possible
             roquer(caseDepart, caseArrive);
             joueurSuivant();
         } else if (caseDepart.getPiece().getType() == 0
@@ -99,30 +99,12 @@ public class EchecModel {
         caseDepart.setPiece(null);
         caseArrive.getPiece().incrementeNbDeplacement();
         echec_c.avertirObservateurs(caseArrive);
-    }
-
-    private boolean roquePossible(Case caseDepart, Case caseArrive) {
-        int rangeeDepart = caseDepart.getRangee();
-        int colonneDepart = caseDepart.getColonne();
-        int colonneArrive = caseArrive.getColonne();
-        if (!caseArrive.estOccupe()
-                && caseDepart.getPiece().estEnPositionInitiale()
-                && caseArrive.getRangee() == rangeeDepart) {
-            if (colonneArrive == colonneDepart + 2
-                    && echiquier.chercherCase(rangeeDepart, colonneArrive + 1).getPiece().estEnPositionInitiale()
-                    && !echiquier.chercherCase(rangeeDepart, colonneArrive - 1).estOccupe()) {
-                return true;
-            } else if (colonneArrive == colonneDepart - 3
-                    && echiquier.chercherCase(rangeeDepart, colonneArrive - 1).getPiece().estEnPositionInitiale()
-                    && !echiquier.chercherCase(rangeeDepart, colonneArrive + 1).estOccupe()
-                    && !echiquier.chercherCase(rangeeDepart, colonneArrive + 2).estOccupe()) {
-                return true;
-            }
+        if (echiquier.verifierEchec()) {
+            echec_c.avertirEchecObservateurs();
         }
-        return false;
     }
 
-    private void roquer(Case caseDepart, Case caseArrive) {
+    public void roquer(Case caseDepart, Case caseArrive) {
         int rangeeDepart = caseDepart.getRangee();
         int colonneDepart = caseDepart.getColonne();
         int colonneArrive = caseArrive.getColonne();
@@ -158,19 +140,4 @@ public class EchecModel {
         jouerPiece(caseMange, caseArrive);
         jouerPiece(caseDepart, caseArrive);
     }
-
-    public boolean[][] deplacementsPossible(Case caseReferente) {
-        boolean[][] deplacementsPossible = new boolean[TAILLE][TAILLE];
-        for (int rangee = 0; rangee < 8; rangee++) {
-            for (int colonne = 0; colonne < 8; colonne++) {//pour chaque case de l'echiquier
-                deplacementsPossible[rangee][colonne] = caseReferente.getPiece().deplacementPossible(caseReferente, echiquier.chercherCase(rangee, colonne));//on stock le resultat du test
-                if (caseReferente.getPiece().getType() == 5
-                        && roquePossible(caseReferente, echiquier.chercherCase(rangee, colonne))) {
-                    deplacementsPossible[rangee][colonne] = true;
-                }
-            }
-        }
-        return deplacementsPossible;
-    }
-
 }

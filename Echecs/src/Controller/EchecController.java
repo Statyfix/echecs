@@ -75,4 +75,10 @@ public class EchecController {
     public void nouvellePartie() {
         echec_m.nouvellePartie();
     }
+
+    public void avertirEchecObservateurs() {
+        for (Observateur o : observateurs) {
+            o.avertirEchec();
+        }
+    }
 }

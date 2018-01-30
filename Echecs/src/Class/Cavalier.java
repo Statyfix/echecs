@@ -25,21 +25,23 @@ public class Cavalier extends Piece {
             if (rangeeArrive == rangeeDepart - 2 //si le cavalier va vers le haut
                     && (colonneArrive == colonneDepart + 1 //et vers la droite
                     || colonneArrive == colonneDepart - 1)) {//ou vers la gauche
-                return true; //il peut se déplacer
+
+                return verifierPasEchecApresDeplacement(caseDepart, caseArrive); //il peut se déplacer
             } else if (rangeeArrive == rangeeDepart + 2 //si le cavalier va vers le bas
                     && (colonneArrive == colonneDepart + 1 //et vers la droite
                     || colonneArrive == colonneDepart - 1)) {//ou vers la gauche
-                return true; //il peut se déplacer
+                return verifierPasEchecApresDeplacement(caseDepart, caseArrive); //il peut se déplacer
             } else if (colonneArrive == colonneDepart - 2 //si le cavalier va vers la gauche
                     && (rangeeArrive == rangeeDepart + 1 //et vers le bas
                     || rangeeArrive == rangeeDepart - 1)) {//ou vers le haut
-                return true; //il peut se déplacer
+                return verifierPasEchecApresDeplacement(caseDepart, caseArrive); //il peut se déplacer
             } else if (colonneArrive == colonneDepart + 2 //si le cavalier va vers la droite
                     && (rangeeArrive == rangeeDepart + 1 //et vers le bas
                     || rangeeArrive == rangeeDepart - 1)) {//ou vers le haut
-                return true; //il peut se déplacer
+                return verifierPasEchecApresDeplacement(caseDepart, caseArrive); //il peut se déplacer
             }
         }
         return false; // sinon il ne peut pas
     }
+
 }

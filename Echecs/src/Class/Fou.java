@@ -28,7 +28,7 @@ public class Fou extends Piece {
                     rangee++;
                     colonne++;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
@@ -38,7 +38,7 @@ public class Fou extends Piece {
                     rangee--;
                     colonne--;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
@@ -48,7 +48,7 @@ public class Fou extends Piece {
                     rangee--;
                     colonne++;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
@@ -58,7 +58,7 @@ public class Fou extends Piece {
                     rangee++;
                     colonne--;
                     if (rangee == rangeeArrive && colonne == colonneArrive) {
-                        return true;
+                        return verifierPasEchecApresDeplacement(caseDepart, caseArrive);
                     } else if (super.getEchiquier().chercherCase(rangee, colonne).estOccupe()) {
                         return false;
                     }
