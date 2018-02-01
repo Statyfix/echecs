@@ -83,7 +83,7 @@ public class EchecModel {
             roquer(caseDepart, caseArrive);
             joueurSuivant();
         } else if (caseDepart.getPiece().getType() == 0
-                && priseEnPassantPossible(caseDepart, caseArrive)) {
+                && echiquier.priseEnPassantPossible(caseDepart, caseArrive)) {
             priseEnPassant(caseDepart, caseArrive);
             joueurSuivant();
         }
@@ -114,27 +114,13 @@ public class EchecModel {
             echec_c.avertirEnDeplacementObservateurs(caseTour);
             jouerPiece(caseTour, echiquier.chercherCase(rangeeDepart, colonneArrive - 1));
         } else {
-            Case caseTour = echiquier.chercherCase(rangeeDepart, colonneArrive - 1);
+            Case caseTour = echiquier.chercherCase(rangeeDepart, colonneArrive - 2);
             echec_c.avertirEnDeplacementObservateurs(caseTour);
             jouerPiece(caseTour, echiquier.chercherCase(rangeeDepart, colonneArrive + 1));
         }
     }
 
-    private boolean priseEnPassantPossible(Case caseDepart, Case caseArrive) {
-        int rangeeDepart = caseDepart.getRangee();
-        int rangeeArrive = caseArrive.getRangee();
-        int colonneDepart = caseDepart.getColonne();
-        int colonneArrive = caseArrive.getColonne();
-        Case caseMange = echiquier.chercherCase(rangeeDepart, colonneArrive);
-        return (rangeeArrive == rangeeDepart - 1
-                || rangeeArrive == rangeeDepart + 1)
-                && (colonneArrive == colonneDepart - 1
-                || colonneArrive == colonneDepart + 1)
-                && caseMange.getPiece().getType() == 0
-                && caseMange.getPiece().getNbDeplacement() == 1;
-    }
-
-    private void priseEnPassant(Case caseDepart, Case caseArrive) {
+    public void priseEnPassant(Case caseDepart, Case caseArrive) {
         Case caseMange = echiquier.chercherCase(caseDepart.getRangee(), caseArrive.getColonne());
         echec_c.avertirEnDeplacementObservateurs(caseMange);
         jouerPiece(caseMange, caseArrive);

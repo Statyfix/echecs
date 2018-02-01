@@ -30,9 +30,9 @@ public class CaseController extends MouseAdapter {
         EchecModel echec_m = echec_c.getEchec_m();
         Case caseEnDeplacement = echec_m.getEchiquier().rechercherPieceEnDeplacement();
         if (caseEnDeplacement == null //si aucune piece n'est en déplacement
-                && caseReferente.estOccupe()
-                && echec_m.getJoueurEnJeu() == caseReferente.getPiece().getCouleur()
-                && !caseReferente.estEnDeplacement()) {
+                && caseReferente.estOccupe()//et que la case possède une pièce
+                && echec_m.getJoueurEnJeu() == caseReferente.getPiece().getCouleur()//et que la couleur de la pièce est celle du joueur qui doit jouer
+                ) {
             caseReferente.setEnDeplacement(true);
             echec_c.avertirEnDeplacementObservateurs(caseReferente);
             echec_c.avertirDeplacementsPossibleObservateurs(echec_m.getEchiquier().deplacementsPossible(caseReferente));
