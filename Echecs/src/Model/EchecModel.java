@@ -46,18 +46,20 @@ public class EchecModel {
         joueurEnJeu = 0;
         int couleur = 1;
 
-        for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {
-            for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {
+        for (int rangee = 0; rangee <= TAILLE - 1; rangee++) {//pour chaque rangée
+            for (int colonne = 0; colonne <= TAILLE - 1; colonne++) {//pour chaque colonne
                 echiquier.chercherCase(rangee, colonne).setEnDeplacement(false);
                 echiquier.chercherCase(rangee, colonne).setPiece(null);
-                if (rangee == 1 || rangee == 6) {
+                if (rangee == 1 || rangee == 6) {//si la case se situe sur la ligne de pions
                     if (rangee == 6) {
                         couleur = 0;
                     }
+                    //on initialise le pion
                     echiquier.chercherCase(rangee, colonne).setPiece(new Pion(couleur, echiquier));
                 }
             }
-            if (rangee == 0 || rangee == 7) {
+            if (rangee == 0 || rangee == 7) {//si la case se situe sur la ligne de pièces
+                //on initialise les pièces
                 echiquier.chercherCase(rangee, 0).setPiece(new Tour(couleur, echiquier));
                 echiquier.chercherCase(rangee, 1).setPiece(new Cavalier(couleur, echiquier));
                 echiquier.chercherCase(rangee, 2).setPiece(new Fou(couleur, echiquier));
@@ -75,15 +77,15 @@ public class EchecModel {
     }
 
     public void jouer(Case caseDepart, Case caseArrive) {
-        if (caseDepart.getPiece().deplacementPossible(caseDepart, caseArrive)) {
+        if (caseDepart.getPiece().deplacementPossible(caseDepart, caseArrive)) {// si le déplacement est possible
             jouerPiece(caseDepart, caseArrive);
             joueurSuivant();
         } else if (caseDepart.getPiece().getType() == 5// si la pièce en déplacement est un roi
                 && echiquier.roquePossible(caseDepart, caseArrive)) {// et que le roque est possible
             roquer(caseDepart, caseArrive);
             joueurSuivant();
-        } else if (caseDepart.getPiece().getType() == 0
-                && echiquier.priseEnPassantPossible(caseDepart, caseArrive)) {
+        } else if (caseDepart.getPiece().getType() == 0//si la pièce est un pion
+                && echiquier.priseEnPassantPossible(caseDepart, caseArrive)) {//et que la prise en passant est possible
             priseEnPassant(caseDepart, caseArrive);
             joueurSuivant();
         }

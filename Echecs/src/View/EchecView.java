@@ -125,7 +125,7 @@ public class EchecView extends JFrame implements Observateur {
 
         this.jlEchiquier = new JLabel[TAILLE][TAILLE];
 
-//        Pour chaque case du tableau
+//        Pour chaque case 
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
 

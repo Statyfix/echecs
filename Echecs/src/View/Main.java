@@ -18,9 +18,11 @@ public class Main {
         
         EchecController echec_c = new EchecController();
         EchecView echec_v = new EchecView(echec_c);
+        EchecTextual echec_t = new EchecTextual(echec_c);
 
         //ajout de la vue au modele comme observateur
         echec_c.ajouterObservateur(echec_v);
+        echec_c.ajouterObservateur(echec_t);
 
         echec_v.setVisible(true);
     }
