@@ -19,15 +19,16 @@ public class CaseController extends MouseAdapter {
     private final Case caseReferente;
 
     private final EchecController echec_c;
+    private final EchecModel echec_m;
 
     public CaseController(Case _caseReferente, EchecController _echec_c) {
         this.caseReferente = _caseReferente;
         this.echec_c = _echec_c;
+        this.echec_m = echec_c.getEchec_m();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        EchecModel echec_m = echec_c.getEchec_m();
         Case caseEnDeplacement = echec_m.getEchiquier().rechercherPieceEnDeplacement();
         if (caseEnDeplacement == null //si aucune piece n'est en déplacement
                 && caseReferente.estOccupe()//et que la case possède une pièce

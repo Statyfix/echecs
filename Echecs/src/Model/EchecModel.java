@@ -23,7 +23,6 @@ public class EchecModel {
 
     private final EchecController echec_c;
     private final Echiquier echiquier;
-    private boolean finPartie;
     private int joueurEnJeu;
     private static final int TAILLE = 8;
 
@@ -71,8 +70,6 @@ public class EchecModel {
             }
         }
 
-        finPartie = false; // Ce n'est pas la fin de la partie
-
         echec_c.avertirMajEchiquierObservateurs();
     }
 
@@ -89,6 +86,9 @@ public class EchecModel {
             priseEnPassant(caseDepart, caseArrive);
             joueurSuivant();
         }
+        if (echiquier.verifierEchecEtMat(joueurEnJeu)) {
+            echec_c.avertirFinPartieAllObservateurs();
+        }
     }
 
     public void joueurSuivant() {
@@ -102,6 +102,7 @@ public class EchecModel {
         caseArrive.getPiece().incrementeNbDeplacement();
         echec_c.avertirObservateurs(caseArrive);
         if (echiquier.verifierEchec()) {
+            if(echiquier.verifierEchecEtMat(joueurEnJeu))
             echec_c.avertirEchecObservateurs();
         }
     }

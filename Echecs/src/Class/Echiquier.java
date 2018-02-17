@@ -85,16 +85,18 @@ public class Echiquier {
 
     public boolean[][] deplacementsPossible(Case caseReferente) {//retourne un tableau à double entrées avec tous les déplacements possible d'une pièce
         boolean[][] deplacementsPossible = new boolean[TAILLE][TAILLE];
-        for (int rangee = 0; rangee < TAILLE; rangee++) {
-            for (int colonne = 0; colonne < TAILLE; colonne++) {//pour chaque case de l'echiquier
-                deplacementsPossible[rangee][colonne] = caseReferente.getPiece().deplacementPossible(caseReferente, chercherCase(rangee, colonne));//on stock le resultat du test
-                if (caseReferente.getPiece().getType() == 5
-                        && roquePossible(caseReferente, chercherCase(rangee, colonne))) {
-                    deplacementsPossible[rangee][colonne] = true;
-                }
-                if (caseReferente.getPiece().getType() == 0
-                        && priseEnPassantPossible(caseReferente, chercherCase(rangee, colonne))) {
-                    deplacementsPossible[rangee][colonne] = true;
+        if (caseReferente.estOccupe()) {
+            for (int rangee = 0; rangee < TAILLE; rangee++) {
+                for (int colonne = 0; colonne < TAILLE; colonne++) {//pour chaque case de l'echiquier
+                    deplacementsPossible[rangee][colonne] = caseReferente.getPiece().deplacementPossible(caseReferente, chercherCase(rangee, colonne));//on stock le resultat du test
+                    if (caseReferente.getPiece().getType() == 5
+                            && roquePossible(caseReferente, chercherCase(rangee, colonne))) {
+                        deplacementsPossible[rangee][colonne] = true;
+                    }
+                    if (caseReferente.getPiece().getType() == 0
+                            && priseEnPassantPossible(caseReferente, chercherCase(rangee, colonne))) {
+                        deplacementsPossible[rangee][colonne] = true;
+                    }
                 }
             }
         }
@@ -116,6 +118,26 @@ public class Echiquier {
                 && caseMange.estOccupe()
                 && caseMange.getPiece().getType() == 0
                 && caseMange.getPiece().getNbDeplacement() == 1;
+    }
+
+    public boolean verifierEchecEtMat(int couleurJoueurEnJeu) {
+        for (int rangee = 0; rangee < TAILLE; rangee++) {
+            for (int colonne = 0; colonne < TAILLE; colonne++) {
+                Case caseTest = chercherCase(rangee, colonne);
+                if (caseTest.estOccupe()
+                        && caseTest.getPiece().getCouleur() == couleurJoueurEnJeu) {
+                    boolean[][] deplacementsPossible = deplacementsPossible(caseTest);
+                    for (int i = 0; i < deplacementsPossible.length; i++) {
+                        for (int j = 0; j < deplacementsPossible[i].length; j++) {
+                            if (deplacementsPossible[i][j]) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }
