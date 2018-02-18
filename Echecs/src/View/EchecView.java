@@ -52,7 +52,7 @@ public class EchecView extends JFrame implements Observateur {
 
     public EchecView(EchecController _echec_c) {
 
-        EchecView.imgPieces = new ImageIcon[3][2][9];
+        this.imgPieces = new ImageIcon[3][2][9];
 
         imgPieces[0][0][0] = new ImageIcon("./src/imgs/blanches/PB_B.png");
         imgPieces[1][0][0] = new ImageIcon("./src/imgs/blanches/PB_N.png");
@@ -118,7 +118,7 @@ public class EchecView extends JFrame implements Observateur {
 
         this.setJMenuBar(jMenuBar1);
 
-        jPanelEchiquier = new JPanel();
+        this.jPanelEchiquier = new JPanel();
         jPanelEchiquier.setLayout(new GridLayout(TAILLE, TAILLE));//définit la taille de la grille de 8 sur 8
 
         this.echec_c = _echec_c;

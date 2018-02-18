@@ -14,6 +14,7 @@ import Class.Reine;
 import Class.Roi;
 import Class.Tour;
 import Controller.EchecController;
+import View.PromotionView;
 
 /**
  *
@@ -86,8 +87,13 @@ public class EchecModel {
             priseEnPassant(caseDepart, caseArrive);
             joueurSuivant();
         }
-        if (echiquier.verifierEchecEtMat(joueurEnJeu)) {
-            echec_c.avertirFinPartieAllObservateurs();
+
+        if (echiquier.verifierEchec()) {
+            if (echiquier.verifierEchecEtMat(joueurEnJeu)) {
+                echec_c.avertirFinPartieAllObservateurs();
+            } else {
+                echec_c.avertirEchecObservateurs();
+            }
         }
     }
 
@@ -100,11 +106,14 @@ public class EchecModel {
         caseDepart.setEnDeplacement(false);
         caseDepart.setPiece(null);
         caseArrive.getPiece().incrementeNbDeplacement();
-        echec_c.avertirObservateurs(caseArrive);
-        if (echiquier.verifierEchec()) {
-            if(echiquier.verifierEchecEtMat(joueurEnJeu))
-            echec_c.avertirEchecObservateurs();
+        if (caseArrive.getPiece().getType() == 0) {//pour la promotion il faut que la pièce soit un pion
+            if (joueurEnJeu == 0 && caseArrive.getRangee() == 0) {//qu'il se trouve sur la rangee 0 si la couleur est blanche
+                PromotionView promotion = new PromotionView(echec_c, caseArrive, echiquier, joueurEnJeu);
+            } else if (joueurEnJeu == 1 && caseArrive.getRangee() == 7) {//qu'il se trouve sur la rangee 7 si la couleur est noire
+                PromotionView promotion = new PromotionView(echec_c, caseArrive, echiquier, joueurEnJeu);
+            }
         }
+        echec_c.avertirObservateurs(caseArrive);
     }
 
     public void roquer(Case caseDepart, Case caseArrive) {
